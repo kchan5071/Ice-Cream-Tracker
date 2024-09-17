@@ -1,0 +1,138 @@
+Individual Table Creation Statements
+
+
+
+1. Customer Table (each cuastomer is a company rather than having multiple customers per company
+
+
+
+-- Table: tracker.Customer
+
+-- DROP TABLE IF EXISTS tracker."Customer";
+
+CREATE TABLE IF NOT EXISTS tracker."Customer"
+(
+    company character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'password'::character varying,
+    status character varying COLLATE pg_catalog."default" DEFAULT 'ok'::character varying,
+    CONSTRAINT "Customer_pkey" PRIMARY KEY (company)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS tracker."Customer"
+    OWNER to postgres;
+
+
+####################################
+
+2. Employee Table
+
+
+
+-- Table: tracker.Employee
+
+-- DROP TABLE IF EXISTS tracker."Employee";
+
+CREATE TABLE IF NOT EXISTS tracker."Employee"
+(
+    name character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" DEFAULT 'password'::character varying,
+    admin boolean DEFAULT false,
+    CONSTRAINT "Employee_pkey" PRIMARY KEY (name)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS tracker."Employee"
+    OWNER to postgres;
+
+
+
+####################################
+
+3. InventoryTable
+
+
+
+-- Table: tracker.Employee
+
+-- DROP TABLE IF EXISTS tracker."Employee";
+
+CREATE TABLE IF NOT EXISTS tracker."Employee"
+(
+    name character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" DEFAULT 'password'::character varying,
+    admin boolean DEFAULT false,
+    CONSTRAINT "Employee_pkey" PRIMARY KEY (name)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS tracker."Employee"
+    OWNER to postgres;
+
+
+
+####################################
+
+4. Order Table 
+
+-- Table: tracker.Order
+
+-- DROP TABLE IF EXISTS tracker."Order";
+
+CREATE TABLE IF NOT EXISTS tracker."Order"
+(
+    id integer NOT NULL,
+    company character varying COLLATE pg_catalog."default" NOT NULL,
+    boxes integer DEFAULT 0,
+    order_date date,
+    estimated_arrival date,
+    arrival date,
+    shipping_method character varying COLLATE pg_catalog."default",
+    shipping_address character varying COLLATE pg_catalog."default",
+    billing_address character varying COLLATE pg_catalog."default",
+    shipping_status character varying COLLATE pg_catalog."default",
+    subtotal_cost numeric,
+    shipping_cost numeric,
+    total_cost numeric,
+    payment_date date,
+    CONSTRAINT "Order_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS tracker."Order"
+    OWNER to postgres;
+
+
+####################################
+
+
+5. Support Ticket Table
+
+
+-- Table: tracker.ticket
+
+-- DROP TABLE IF EXISTS tracker.ticket;
+
+CREATE TABLE IF NOT EXISTS tracker.ticket
+(
+    id integer NOT NULL,
+    source character varying COLLATE pg_catalog."default",
+    type character varying COLLATE pg_catalog."default",
+    description character varying COLLATE pg_catalog."default",
+    status character varying COLLATE pg_catalog."default" DEFAULT 'open'::character varying,
+    report_date date,
+    date_detected date,
+    date_resolved date,
+    resolution character varying COLLATE pg_catalog."default",
+    CONSTRAINT ticket_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS tracker.ticket
+    OWNER to postgres;
+
