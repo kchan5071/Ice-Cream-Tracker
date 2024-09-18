@@ -174,10 +174,10 @@ ALTER TABLE ONLY tracker.Inventory ALTER COLUMN id SET DEFAULT nextval('tracker.
 -- Data for Name: Customer; Type: TABLE DATA; Schema: tracker; Owner: postgres
 --
 
-INSERT INTO tracker.Customer (company, password, status)
-VALUES
-('bk', 'burger', 'ok'),
-('kfc', 'chicken', 'ok');
+COPY tracker.Customer (company, password, status) FROM stdin;
+bk	burger	ok
+kfc	chicken	ok
+\.
 
 
 --
@@ -187,6 +187,8 @@ VALUES
 --
 
 COPY tracker.Employee (name, password, admin) FROM stdin;
+steve	craft	FALSE
+matthew	password	TRUE
 \.
 
 
