@@ -2,11 +2,13 @@ from database_connector import DatabaseWrapper
 
 
 def main():
-    user = 'kzc'
+
+    # if testing on computer ensure correct user (should match linux username)
+    user = 'matthew'
     password = 'password'
     host = 'localhost'
     port = '5432'
-    database = 'postgres'
+    database = 'icecreamtracker'
     schema = 'tracker'
 
 
