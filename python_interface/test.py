@@ -4,7 +4,7 @@ from database_connector import DatabaseWrapper
 def main():
 
     # if testing on computer ensure correct user (should match linux username)
-    user = 'matthew'
+    user = 'admin'
     password = 'password'
     host = 'localhost'
     port = '5432'
