@@ -10,14 +10,14 @@ stop:
 	pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgresql@14 stop
 
 create:
-	createdb -h 127.0.0.1 -p 5432 -U $(USER_NAME) icecreamtracker
+	createdb -h 127.0.0.1 -p 5432 -U admin icecreamtracker
 	psql -h 127.0.0.1 -p 5432 -d icecreamtracker -f database/database_tables_structure/icecreamtracker.sql
 
 update:
 	psql -h 127.0.0.1 -p 5432 -d icecreamtracker -f database/database_tables_structure/icecreamtracker.sql
 
 remove:
-	dropdb -h 127.0.0.1 -p 5432 -U $(USER_NAME) icecreamtracker
+	dropdb -h 127.0.0.1 -p 5432 -U admin icecreamtracker
 
 connect:
 	psql -h 127.0.0.1 -p 5432 -d icecreamtracker
