@@ -1,0 +1,203 @@
+/* Style Sheet, In control of the appearance of the ICE TRACK site */
+* {
+    box-sizing: border-box;
+    /* font-family: 'Montserrat'; */
+  }
+
+/* <uniquifier>: Use a unique and descriptive class name*/
+.montserrat-eb {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+  
+  body {
+    margin: 0;
+    background-color: lightblue;
+    align-content: center;
+  }
+  
+  .identifier {
+    overflow: hidden;
+    background-color: #333; 
+    font-family: 'Montserrat';
+  }
+  
+  /* Style the identifier buttons */
+  .identifier a {
+    float: left;
+    display: block;
+    color: #f2f2f2; /* Nav Text Color */
+    text-align: center;
+    padding: 5px 16px;
+    text-decoration: none;
+  }
+  
+  /* updating identifier buttons on hover */
+  .identifier a:hover {
+    background-color: #ddd;/* Nav Color on hover */
+    color: black; /* Nav Text Color on hover*/
+  } 
+  
+  
+  /* Style the header */
+  .header {
+    background-color: #fafafa;
+    color: #964B00; /* Header Text Color: brown*/
+    /* font-family: Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif;  */
+    font-family: "Montserrat";
+    /* font-optical-sizing: auto; */
+    
+    font-size: 25px;
+    padding: 5px;
+    text-align: center;
+    font-weight: 900;
+  }
+  
+  /* Style the top navigation bar */
+  .topnav {
+    overflow: hidden;
+    background-color: #333; /* Nav Text Color */
+  }
+  
+  /* Style the topnav links */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2; /* Nav Color */
+    /* font-family: Helvetica, Sans-Serif; */
+    font-family: 'Montserrat';
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change color on hover */
+  .topnav a:hover {
+    background-color: #ddd;/* Nav Color on hover */
+    color: black; /* Nav Text Color on hover*/
+  }
+  
+  #rcorners1 {
+    border-radius: 25px;
+    background: white;
+    /* padding: 20px; */
+    margin: 5;
+    text-align: left;
+  }
+  
+  #rcorners2 {
+    border-radius: 25px;
+    background: rgba(227, 223, 223,0.5);
+    padding: 10px;
+    margin: 10 50;
+    align-content: center;
+    text-align: center;
+  }
+  #rcorners3 {
+    /*shaping*/
+    border-radius: 25px;
+    padding: 10px 50px;
+    margin: 10 10;
+    align-content: center;
+    text-align: center;
+  }
+  #rcorners4 {
+    border-radius: 5px;
+    border-width: 2px;
+    background: white;
+    /* padding: 20px; */
+    margin: 5;
+    text-align: left;
+  }
+
+  #amount {
+    border-radius: 5px;
+    border-width: 2px;
+    background: white;
+    /* padding: 20px; */
+    margin: 5;
+    text-align: left;
+  }
+
+  #rcorners4long {
+    border-radius: 5px;
+    background: white;
+    width: 300px;
+    margin: 5;
+    text-align: left;
+  }
+  #rcorners5 {
+    border-radius: 25px;
+    background: rgba(227, 223, 223,0.5);
+    padding: 10px;
+    margin: 10 50;
+    align-content: left;
+    text-align: left;
+  }
+
+
+  .loginbox {
+    overflow:auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+    padding: 20px;
+    margin: 10 100;
+    align-content: center;
+    text-align: center;
+  }
+
+  .button {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+  }
+  
+  .button:hover {
+    background-color: #555555;
+    color: white;
+  }
+
+  .help_button {
+    background-color: white;
+    color: black;
+    border: 2px;
+    border-radius: 50%;
+  }
+  .help_button:hover {
+    background-color: #555555;
+    color: white;
+    border-radius: 50%;
+  }
+
+  .submit_button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #04a5aa;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+  
+  .submit_button:hover {background-color: #3e878e}
+  
+  .submit_button:active {
+    background-color: #3e858e;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  .input_group {
+    /* align-content: left; */
+  }
+  .input_group2 {
+    align-content: left;
+  }
