@@ -1,109 +1,148 @@
 <!-- ICE TRACK ORDER ENTRY PAGE: ADDS ENTRIES TO THE DATABASE OF ORDERS -->
- <!-- may need to add more pages here for fluidity -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Ice Track Management Order Entry</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
-<link rel="stylesheet" href="icetrackstyles.css"/>
+    <title>Ice Track Management Order Entry</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icetrackstyles.css"/>
 </head>
 <body>
-  <script src="icetrackJS.js"></script>
-  </script>
-  
-  <div class="identifier">
+    <script src="icetrackJS.js"></script>
+
+    <div class="identifier">
         <a href="icetracklogin.html">Login</a> 
         <a href="icetracksignup.html">Sign Up</a> 
-  </div>
+    </div>
 
-<div class="header">
-  <h1>Enter an Order</h1>
-</div>
+    <div class="header">
+      <h1>Enter An Order</h1>
+    </div>
 
-<div class="topnav">
-    <a href="icetrackhome.html"">Home</a> 
-    <a href="icetrackorder.html">Order Entry</a>
-    <a href="icetrackinventory.html">Inventory Management</a>
-    <a href="icetrackshipment.html">Shipment Tracking</a>
-    <a href="icetrackticketmgmt.html">Trouble Tickets</a>
-  </div>
-<p id = "rcorners1"> Enter one order at a time and remember to review information before submitting.</p>
- <form action = "/orderentryform/{{orderentryform['id']}}/submission"> <!-- everything past this point is accepted for order entry -->
-  <h2>Order Details</h2>
-   <div class="input_group2" id = "rcorners5">
-      <label for="">Name</label>
-      <input type="text"required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
-   </div>
-   <div class="input_group2" id = "rcorners5">
-    <label for="">Shipping Address</label>
-    <input type="text"required id="rcorners4" name = "ShippingAddress">
-    <button class="help_button" id="help">?</button>   
-  </div>
-  <div class="input_group2" id = "rcorners5">
-    <label for="">Billing Address</label>
-    <input type="text"required id="rcorners4" name = "BillingAddress">
-    <button class="help_button" id="help">?</button>   
- </div>
- <div class="input_group2" id="rcorners5">
-  <label for="">Order Description</label>
-  <textarea id="rcorners4" required rows="1" name = "OrderDescription"></textarea>
-  <button class="help_button" id="help">?</button>   
-</div>
-<hr>
+    <div class="topnav">
+        <a href="icetrackhome.html">Home</a> 
+        <a href="icetrackorder.html">Order Entry</a>
+        <a href="icetrackinventory.html">Inventory Management</a>
+        <a href="icetrackshipment.html">Shipment Tracking</a>
+        <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+    </div>
 
-<h2>Costs</h2>
-<div class="input_group" id="rcorners5">
-  <label for="amount">Subtotal</label>
-  <input type="number" id="amount" name="Subtotal" min="0" step="0.01" required>
-</div>
-<div class="input_group2" id = "rcorners5">
-  <label for="amount">ShippingCost</label>
-  <input type="number" id="amount" name="ShippingCost" min="0" step="0.01" required>
-</div>
-<div class="input_group2" id = "rcorners5">
-  <label for="amount">Total Cost</label>
-  <input type="number" id="amount" name="TotalCost" min="0" step="0.01" required> 
-</div>
-<hr>
+    <p id="rcorners1" class = "myLabel"> Enter one order at a time and remember to review information before submitting.</p>
 
-<h2>Time Records</h2>
-<div class="input_group2" id = "rcorners5">
-  <label for="">Order Date</label>
-  <input type="date"required id="rcorners4" name = "OrderDate"></input>  
-  <button class="help_button" id="help">?</button>   
-</div>
-<div class="input_group2" id = "rcorners5">
-<label for="">Payment Date</label>
-<input type="date"required id="rcorners4" name = "PaymentDate"></input> 
-<button class="help_button" id="help">?</button>    
-</div>
-<div class="input_group" id = "rcorners5">
-<label for="">Estimated Arrival Date</label>
-<input type="date"required id="rcorners4" name = "EstimatedArrivalDate"></input> 
-<button class="help_button" id="help">?</button>   
-</div>
-<hr>
+    <form action="/orderentryform/{{orderentryform['id']}}/submission">
+      <h2 class = "header2"><u>Order Details</u></h2>
+        <!-- string inputs for descriptive values -->
+        <div class="input_group2" id = "rcorners5">
+            <label for="" class = "myLabel">Name</label>
+            <input type="text"required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
+         </div>
 
-<h2>Customer Status</h2>
-<div class="input_group" id = "rcorners5">
-  <label for="">Customer Status</label>
-  <select id="rcorners4" name="CustomerStatus" onchange="hideOptions()" multiple required>
-    <option value="preferred">Preferred</option>
-    <option value="ok">Ok</option>
-    <option value="shaky">Shaky</option>
-</select>
+        <!-- Shipping Address -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Shipping Address</label>
+            <input type="text" required id="rcorners4" name="ShippingAddress">
+            <button class="help_button" id="help-shipping">?</button>   
+            <div id="myModal-shipping" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-shipping">&times;</span>
+                    <p>This is where the ice cream will be sent</p>
+                </div>
+            </div>
+        </div>
 
-  <button class="help_button" id="help">?</button>   
-  </div>
+        <!-- Billing Address -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Billing Address</label>
+            <input type="text" required id="rcorners4" name="BillingAddress">
+            <button class="help_button" id="help-billing">?</button>   
+            <div id="myModal-billing" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-billing">&times;</span>
+                    <p>This is where you will be billed</p>
+                </div>
+            </div>
+        </div>
 
-<hr>
-  <input type = "submit" class = "submit_button">
- </form>
-<p id = "rcorners1"> Don't forget to review <b>before</b> you submit</p>
+        <!-- Order Description -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Order Description</label>
+            <textarea id="rcorners4" required rows="2" name="OrderDescription"></textarea>
+            <button class="help_button" id="help-description">?</button>   
+            <div id="myModal-description" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-description">&times;</span>
+                    <p>Describe the order in detail. Include the flavor, size, and quantity</p>
+                </div>
+            </div>
+        </div>
 
+      <h2 class = "header2"><u>Costs</u></h2> <!-- numeric inputs for numeric values -->
+        <div class="input_group" id="rcorners5">
+            <label for="amount" class = "myLabel">Subtotal</label>
+            <input type="number" id="amount" name="Subtotal" min="0" step="0.01" required>
+        </div>
+        <div class="input_group2" id="rcorners5">
+            <label for="amount" class = "myLabel">Shipping Cost</label>
+            <input type="number" id="amount" name="ShippingCost" min="0" step="0.01" required>
+        </div>
+        <div class="input_group2" id="rcorners5">
+            <label for="amount" class = "myLabel">Total Cost</label>
+            <input type="number" id="amount" name="TotalCost" min="0" step="0.01" required>
+        </div>
+
+      <h2 class = "header2"><u>Time Records</u></h2> <!-- date-type input values -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Order Date</label>
+            <input type="date" required id="rcorners4" name="OrderDate">
+            <button class="help_button" id="help-orderDate">?</button>   
+            <div id="myModal-orderDate" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-orderDate">&times;</span>
+                    <p>Select the date of order placement</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Payment Date</label>
+            <input type="date" required id="rcorners4" name="PaymentDate">
+            <button class="help_button" id="help-paymentDate">?</button>   
+            <div id="myModal-paymentDate" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-paymentDate">&times;</span>
+                    <p>Select the date payment was made</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Customer Status -->
+      <h2 class = "header2"><u>Customer Status</u></h2>
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Customer Status</label>
+            <select id="rcorners4" name="CustomerStatus" multiple required>
+                <option value="preferred">Preferred</option>
+                <option value="ok">Ok</option>
+                <option value="shaky">Shaky</option>
+            </select>
+            <button class="help_button" id="help-customerStatus">?</button>   
+            <div id="myModal-customerStatus" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-customerStatus">&times;</span>
+                    <p>Select the status best corresponding to the reputation of the customer. <i>Preferred</i> ranking the best and <i>Shaky</i> being not as good.</p>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" class="submit_button">
+    </form>
+
+    <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit</p>
+
+    <script src="helpButton.js"></script>
 </body>
 </html>

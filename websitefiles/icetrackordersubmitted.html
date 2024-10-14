@@ -5,11 +5,12 @@
  <head>
  <title>Ice Track Management Order Entry</title>
  <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
- <link rel="stylesheet" href="icetrackstyles.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icetrackstyles.css"/>
  </head>
  <body>
    <script src="icetrackJS.js"></script>
@@ -31,54 +32,51 @@
      <a href="icetrackshipment.html">Shipment Tracking</a>
      <a href="icetrackticketmgmt.html">Trouble Tickets</a>
    </div>
- <p id = "rcorners1">Here is a record of your most recent submission.</p>
+ <p id = "rcorners1" class = "myLabel">Here is a record of your most recent submission.</p>
   
-<h2>Submission Successful!</h2>
+<h2 class = "header">Submission Successful!</h2>
 
-   <h4>Name</h4>
+<h2 class = "header2">Details</h2>
+   <h4 class = "myLabel">Name</h4>
    <div>{{data['CustomerName']}}</div>
 
-    <h4>Shipping Address</h4>
+    <h4 class = "myLabel">Shipping Address</h4>
    <div>{{data['ShippingAddress']}}</div>
 
-   <h4>Billing Address</h4>
+   <h4 class = "myLabel">Billing Address</h4>
    <div>{{data['BillingAddress']}}</div>
    
-   <h4>Order Description</h4>
+   <h4 class = "myLabel">Order Description</h4>
    <div>{{data['OrderDescription']}}</div>
- <hr>
  
- <h2>Costs</h2>
+ <h2 class = "header2">Costs</h2>
 
-    <h4>Subtotal</h4>
+    <h4 class = "myLabel">Subtotal</h4>
    <div>{{data['Subtotal']}}</div>
 
-   <h4>Shipping Cost</h4>
+   <h4 class = "myLabel">Shipping Cost</h4>
    <div>{{data['ShippingCost']}}</div>
 
-   <h4>Total Cost</h4>
+   <h4 class = "myLabel">Total Cost</h4>
    <div>{{data['TotalCost']}}</div>
- <hr>
  
- <h2>Time Records</h2>
+ <h2 class = "header2">Time Records</h2>
 
-    <h4>Order Date</h4>
+    <h4 class = "myLabel">Order Date</h4>
    <div>{{data['OrderDate']}}</div>
  
-   <h4>Payment Date</h4>
+   <h4 class = "myLabel">Payment Date</h4>
    <div>{{data['PaymentDate']}}</div>
 
-   <h4>Estimated Arrival Date</h4>
+   <h4 class = "myLabel">Estimated Arrival Date</h4>
    <div>{{data['EstimatedArrivalDate']}}</div>
-
- <hr>
  
- <h2>Customer Status</h2>
+ <h2 class = "header2">Customer Status</h2>
 
-    <h4>Customer Status</h4>
+    <h4 class = "myLabel">Customer Status</h4>
     <div>{{data['CustomerStatus']}}</div>
- <hr>
- <p id = "rcorners1">Thank you for your submission</p>
+
+ <p id = "rcorners1" class = "myLabel">Thank you for updating our records!</p>
  
  </body>
  </html>
