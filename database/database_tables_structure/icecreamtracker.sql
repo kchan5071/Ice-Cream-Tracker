@@ -7,6 +7,20 @@
 
 -- Started on 2024-09-12 11:05:48
 
+-- Creating an admin user to test with
+DO
+$$
+BEGIN
+   IF NOT EXISTS (
+      SELECT FROM pg_catalog.pg_roles 
+      WHERE rolname = 'admin'
+   ) THEN
+      CREATE ROLE admin WITH LOGIN PASSWORD 'password';
+   END IF;
+END
+$$;
+
+
 DROP SCHEMA IF EXISTS tracker CASCADE;;
 
 
@@ -15,7 +29,6 @@ DROP TABLE IF EXISTS tracker.Employee;
 DROP TABLE IF EXISTS tracker.Inventory;
 DROP TABLE IF EXISTS tracker.Order;
 DROP TABLE IF EXISTS tracker.ticket;
-
 
 
 
@@ -282,6 +295,13 @@ ALTER TABLE ONLY tracker.Order
 
 ALTER TABLE ONLY tracker.ticket
     ADD CONSTRAINT ticket_pkey PRIMARY KEY (id);
+
+
+
+--give admin access to tables
+GRANT USAGE ON SCHEMA tracker TO admin;
+ALTER ROLE admin WITH SUPERUSER;
+
 
 
 -- Completed on 2024-09-12 11:05:48

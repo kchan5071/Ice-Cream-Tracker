@@ -4,7 +4,7 @@ from database_connector import DatabaseWrapper
 def main():
 
     # if testing on computer ensure correct user (should match linux username)
-    user = 'matthew'
+    user = 'admin'
     password = 'password'
     host = 'localhost'
     port = '5432'
@@ -24,6 +24,9 @@ def main():
     print("Columns: ")
     for i in range(len(db_connector.tables)):
         print(db_connector.columns[i])
+
+
+    print(db_connector.search_column('customer', 'password', 'chicken'))
 
     # print("Data: ")
     # print(db_connector.fetch_all(table))
