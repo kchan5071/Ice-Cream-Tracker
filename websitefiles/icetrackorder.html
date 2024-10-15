@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Ice Track Management Order Entry</title>
+    <title>Ice Track Order Entry</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
@@ -29,6 +29,7 @@
         <a href="icetrackinventory.html">Inventory Management</a>
         <a href="icetrackshipment.html">Shipment Tracking</a>
         <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+        <a href="icetrackFAQ.html">FAQ</a>
     </div>
 
     <p id="rcorners1" class = "myLabel"> Enter one order at a time and remember to review information before submitting.</p>
@@ -49,7 +50,7 @@
             <div id="myModal-shipping" class="modal">
                 <div class="modal-content">
                     <span class="close" data-modal="myModal-shipping">&times;</span>
-                    <p>This is where the ice cream will be sent</p>
+                    <p>This is where the ice cream will be sent.</p>
                 </div>
             </div>
         </div>
@@ -62,7 +63,7 @@
             <div id="myModal-billing" class="modal">
                 <div class="modal-content">
                     <span class="close" data-modal="myModal-billing">&times;</span>
-                    <p>This is where you will be billed</p>
+                    <p>This is where you will be billed.</p>
                 </div>
             </div>
         </div>
@@ -75,7 +76,7 @@
             <div id="myModal-description" class="modal">
                 <div class="modal-content">
                     <span class="close" data-modal="myModal-description">&times;</span>
-                    <p>Describe the order in detail. Include the flavor, size, and quantity</p>
+                    <p>Describe the order in detail; be sure to include the flavor, size, and quantity.</p>
                 </div>
             </div>
         </div>
@@ -102,7 +103,7 @@
             <div id="myModal-orderDate" class="modal">
                 <div class="modal-content">
                     <span class="close" data-modal="myModal-orderDate">&times;</span>
-                    <p>Select the date of order placement</p>
+                    <p>Select the date of order placement.</p>
                 </div>
             </div>
         </div>
@@ -114,7 +115,7 @@
             <div id="myModal-paymentDate" class="modal">
                 <div class="modal-content">
                     <span class="close" data-modal="myModal-paymentDate">&times;</span>
-                    <p>Select the date payment was made</p>
+                    <p>Select the date payment was made.</p>
                 </div>
             </div>
         </div>
@@ -126,14 +127,14 @@
             <label for="" class = "myLabel">Customer Status</label>
             <select id="rcorners4" name="CustomerStatus" multiple required>
                 <option value="preferred">Preferred</option>
-                <option value="ok">Ok</option>
+                <option value="ok" selected>Ok</option>
                 <option value="shaky">Shaky</option>
             </select>
             <button class="help_button" id="help-customerStatus">?</button>   
             <div id="myModal-customerStatus" class="modal">
                 <div class="modal-content">
                     <span class="close" data-modal="myModal-customerStatus">&times;</span>
-                    <p>Select the status best corresponding to the reputation of the customer. <i>Preferred</i> ranking the best and <i>Shaky</i> being not as good.</p>
+                    <p>Select the status best corresponding to the reputation of the customer. If no selection is made, this will default to "OK".</p>
                 </div>
             </div>
         </div>
@@ -141,7 +142,7 @@
         <input type="submit" class="submit_button">
     </form>
 
-    <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit</p>
+    <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit.</p>
 
     <script src="helpButton.js"></script>
 </body>

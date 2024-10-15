@@ -1,4 +1,4 @@
-// Help button javascript for the ice track order entry page
+// Help button javascript for the ice track shipment page
 
 // Function to handle showing modals
 function showModal(modalId) {
@@ -12,25 +12,20 @@ function closeModal(modalId) {
     modal.style.display = "none";
 }
 
-// Event listeners for each help button and close button 
-document.getElementById("help-shipping").onclick = function() {
-    showModal("myModal-shipping");
+// Event listeners for each help button and close button (in order of appearance)
+document.getElementById("help-orderName").onclick = function() {
+    showModal("myModal-orderName");
 };
-document.getElementById("help-billing").onclick = function() {
-    showModal("myModal-billing");
+document.getElementById("help-shipmentDate").onclick = function() {
+    showModal("myModal-shipmentDate");
 };
-document.getElementById("help-description").onclick = function() {
-    showModal("myModal-description");
+document.getElementById("help-shippingAddress").onclick = function() {
+    showModal("myModal-shippingAddress");
 };
-document.getElementById("help-orderDate").onclick = function() {
-    showModal("myModal-orderDate");
+document.getElementById("help-deliveryDate").onclick = function() {
+    showModal("myModal-deliveryDate");
 };
-document.getElementById("help-paymentDate").onclick = function() {
-    showModal("myModal-paymentDate");
-};
-document.getElementById("help-customerStatus").onclick = function() {
-    showModal("myModal-customerStatus");
-};
+
 
 
 // Event listeners for closing modals
@@ -50,4 +45,3 @@ window.onclick = function(event) {
         }
     });
 };
-
