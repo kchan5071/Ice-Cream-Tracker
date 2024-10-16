@@ -72,7 +72,7 @@ class DatabaseWrapper:
             print(e)
     
     def fetch_all(self, table):
-        query = f"SELECT * FROM {table}"
+        query = f"SELECT * FROM {self.schema}.{table}"
         try:
             self.cursor.execute(query)
             return self.cursor.fetchall()
@@ -82,7 +82,7 @@ class DatabaseWrapper:
             print(e)
     
     def search_column(self, table, column, value):
-        query = f"SELECT * FROM {table} WHERE {column} = '{value}'"
+        query = f"SELECT * FROM {self.schema}.{table} WHERE {column} = '{value}'"
         try:
             self.cursor.execute(query)
             return self.cursor.fetchall()
@@ -94,7 +94,7 @@ class DatabaseWrapper:
         
     def insert_data(self, table, data):
         index = self.get_table_index(table)
-        query = f"INSERT INTO {table} ({','.join(self.columns[index])}) VALUES ({data})"
+        query = f"INSERT INTO {self.schema}.{table} ({','.join(self.columns[index])}) VALUES ({data})"
         try:
             self.cursor.execute(query)
             self.connection.commit()
@@ -106,12 +106,12 @@ class DatabaseWrapper:
             return None
     
     def delete_from_name(self, table, name):
-        query = f"DELETE FROM {table} WHERE name = '{name}'"
+        query = f"DELETE FROM {self.schema}.{table} WHERE name = '{name}'"
         self.send_insert_query(query)
         return name
     
     def clear_table(self, table):
-        query = f"DELETE FROM {table}"
+        query = f"DELETE FROM {self.schema}.{table}"
         try:
             self.cursor.execute(query)
             self.connection.commit()
@@ -161,7 +161,7 @@ class DatabaseWrapper:
             return None
 
     def delete_row(self, table, column, value):
-        query = f"DELETE FROM {table} WHERE {column} = '{value}'"
+        query = f"DELETE FROM {self.schema}.{table} WHERE {column} = '{value}'"
         try:
             self.cursor.execute(query)
             self.connection.commit()
