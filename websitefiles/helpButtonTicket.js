@@ -13,19 +13,22 @@ function closeModal(modalId) {
 }
 
 // Event listeners for each help button and close button (in order of appearance)
+document.getElementById("help-todaysDate").onclick = function() {
+    showModal("myModal-todaysDate");
+};
+document.getElementById("help-sourceName").onclick = function() {
+    showModal("myModal-sourceName");
+};
+document.getElementById("help-detectionDate").onclick = function() {
+    showModal("myModal-detectionDate");
+};
+document.getElementById("help-problemType").onclick = function() {
+    showModal("myModal-problemType");
+};
+document.getElementById("help-description").onclick = function() {
+    showModal("myModal-description");
+};
 
-document.getElementById("help-commit").onclick = function() {
-    showModal("myModal-commit");
-};
-document.getElementById("help-delete").onclick = function() {
-    showModal("myModal-delete");
-};
-document.getElementById("help-add").onclick = function() {
-    showModal("myModal-add");
-};
-document.getElementById("help-timeFrame").onclick = function() {
-    showModal("myModal-timeFrame");
-};
 
 
 // Event listeners for closing modals

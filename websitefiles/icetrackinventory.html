@@ -15,9 +15,6 @@
 <body>
 
   <div class="identifier">
-    <!--if logged in: Who is currently logged in 
-        else: login button 
-        can add: colors signifying the hierarchy of permissions -->
         <a href="icetracklogin.html">Login</a> 
         <a href="icetracksignup.html">Sign Up</a> 
   </div>
@@ -36,33 +33,91 @@
 </div>
 <p id = "rcorners1" class = "myLabel"> This page allows you to make changes to the company inventory database</i></p>
 <!-- what to add
- - visual, scrollable table that allows you to view the company's current inventory, with sort options
- - add/delete buttons -> Do I want to have a select option for everything in the table? or do i want to have the delete option separate
+ - visual, scrollable table with checkmark boxes that allows you to view the company's current inventory
+ - commit/add/delete buttons I want to have a select option for everything in the table
  - Print statistical summary report button
  - -->
   
  <!-- The Inventory header featuring the sort by option which is not yet functional because there is no table -->
+
+  <div> 
+    <!-- # to commit -->
+    <form>
+      <!-- input value -->
+       <input type="number" class="input_group2" id="rcorners5">
+      <!-- commit button -->
+       <input type="submit" class="submit_button" value="commit">
+      <!-- help -->
+       <button type="button" class="help_button" id="help-commit">?</button>  
+       <div id="myModal-commit" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="myModal-commit">&times;</span>
+            <p> This button will commit the entered number of items from the selected row in the inventory, changing their statuses from planned to actual.</p>
+        </div>
+       </div> 
+    </form>
+   
+
+   <!-- # to delete -->
+   <form>
+    <!-- input value -->
+     <input type="number" class="input_group2" id="rcorners5">
+    <!-- delete button -->
+     <input type="submit" class="submit_button" value="delete"> 
+    <!-- help -->
+     <button type="button" class="help_button" id="help-delete">?</button>  
+     <div id="myModal-delete" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="myModal-delete">&times;</span>
+          <p> This button will delete the entered number of items from the selected row in the inventory.</p>
+      </div>
+     </div>
+  </form>
+
+
+  <!-- # to add -->
+   <form>
+    <!-- input value -->
+     <input type="number" class="input_group2" id="rcorners5">
+    <!-- add button -->
+     <input type="submit" class="submit_button" value="add"> 
+    <!-- help -->
+     <button type="button" class="help_button" id="help-add">?</button>
+     <div id="myModal-add" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="myModal-add">&times;</span>
+          <p> This button will add the entered number of items to the selected row in the inventory.</p>
+      </div>
+     </div>
+   </form>
+
+  </div>
+
+
+<form method = "post" class = "myLabel"></form>
   <div class="input_group2" id="rcorners5">
     <h2 class = "header2">
-      <u>Inventory
-     <label for="" class = "myLabel"><b>Sort By:</b></label>
-     <select id="rcorners4" name="CustomerStatus" multiple required>
-         <option value="sortID">Item ID</option>
-         <option value="sortFlavor">Flavor</option>
-         <option value="sortSize">Size</option>
-         <option value="sortCost">Cost</option>
-         <option value="sortAvailable">Available</option>
-         <option value="sortCommitted">Committed</option>
+      <u>Change Summary 
+     <label for="" class = "myLabel"><b>Select:</b></label>
+     <!-- lets you choose what time frame of data you want to see -->
+     <select id="rcorners4" name="timeFrame" multiple required>
+         <option value="sortID">past week</option>
+         <option value="sortFlavor">past month</option>
+         <option value="sortSize">past year</option>
+         <option value="sortCost" selected>all time</option>
      </select>
-     <button class="help_button" id="help-sortingTool">?</button>   
-     <div id="myModal-sortingTool" class="modal">
+     <button class="help_button" id="help-timeFrame">?</button>   
+     <div id="myModal-timeFrame" class="modal">
          <div class="modal-content">
-             <span class="close" data-modal="myModal-sortingTool">&times;</span>
-             <p>This dropdown menu allows you reorganize the table to more quickly find what you are looking for.</p>
+             <span class="close" data-modal="myModal-timeFrame">&times;</span>
+             <p>This dropdown menu allows you to generate a new summary report showing the disposition of inventory for specified time periods (weekly, monthly, yearly).</p>
          </div>
      </div></u>
     </h2>
   </div>
+  <!-- generate summary button -->
+  <input type = "submit" value = "generate summary" class = "submit_button">
+</form>
 
 
 <script src="helpButtonInventory.js"></script>
