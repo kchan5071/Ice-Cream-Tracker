@@ -1,0 +1,143 @@
+<!-- ICE TRACK SHIPMENT TRACKING PAGE: ALLOWS YOU TO LOOK UP AND FIND SHIPMENTS -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ice Track Shipment Tracking</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icetrackstyles.css"/>
+   
+</head>
+<body>
+    <script src="icetrackJS.js"></script>
+
+    <div class="identifier">
+        <a href="icetracklogin.html">Login</a> 
+        <a href="icetracksignup.html">Sign Up</a> 
+    </div>
+
+    <div class="header">
+      <h1>Track Your Shipment</h1>
+    </div>
+
+    <div class="topnav">
+        <a href="icetrackhome.html">Home</a> 
+        <a href="icetrackorder.html">Order Entry</a>
+        <a href="icetrackinventory.html">Inventory Management</a>
+        <a href="icetrackshipment.html">Shipment Tracking</a>
+        <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+        <a href="icetrackFAQ.html">FAQ</a>
+    </div>
+
+    <p id="rcorners1" class = "myLabel"> Enter identifiable information so that we may retrieve your shipment information.</p>
+
+    <form action="/orderentryform/{{orderentryform['id']}}/submission">
+      <h2 class = "header2"><u>Find Your Shipment</u></h2>
+        <!-- The Customer's Name -->
+        <div class="input_group2" id = "rcorners5">
+            <label for="" class = "myLabel">Order Name (Your name as a Customer)</label>
+            <input type="text"required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
+            <button class="help_button" id="help-orderName">?</button>   
+            <div id="myModal-orderName" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-orderName">&times;</span>
+                    <p>This name should match the one associated with the order, typically the customer's name as entered.</p>
+                </div>
+            </div>
+          </div>
+
+        <!-- Shipping Address -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Shipping Address</label>
+            <input type="text" required id="rcorners4" name="ShippingAddress">
+            <button class="help_button" id="help-shippingAddress">?</button>   
+            <div id="myModal-shippingAddress" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-shippingAddress">&times;</span>
+                    <p>This is where the ice cream was directed to be sent</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipment Date -->
+       <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Shipment Date</label>
+            <input type="date" required id="rcorners4" name="ShipmentDate">
+            <button class="help_button" id="help-shipmentDate">?</button>   
+            <div id="myModal-shipmentDate" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-shipmentDate">&times;</span>
+                    <p>Select the date of shipment according to your receipts, if not shipped, your order may not appear</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expected Delivery Date -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Expected Delivery Date</label>
+            <input type="date" required id="rcorners4" name="deliveryDate">
+            <button class="help_button" id="help-deliveryDate">?</button>   
+            <div id="myModal-deliveryDate" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-deliveryDate">&times;</span>
+                    <p>Select the date the package was (or is) expected to be delivery regardless of accuracy.</p>
+                </div>
+            </div>
+        </div>
+        <!-- The button for searching when the user is done filling out identifiable information -->
+        <input type="submit" class="submit_button" value = "Track">
+
+    </form>
+    <script src="helpButtonShip.js"></script>
+    <hr>
+    
+    <!-- Returned Information from Search -->
+ {% if 'shipmentID' in orders %} <!--flask statements that allow us to control vision --> 
+    <h2 class = "header">Matching Shipment Information</h2>
+
+<h2 class = "header2"><u>Shipment Details</u></h2>
+   <h4 class = "myLabel">Name</h4>
+   <div>{{data['CustomerName']}}</div>
+
+    <h4 class = "myLabel">Shipping Address</h4>
+   <div>{{data['ShippingAddress']}}</div>
+
+   <h4 class = "myLabel">Shipment Date</h4>
+   <div>{{data['ShipmentDate']}}</div>
+   
+   <h4 class = "myLabel">Delivery Date</h4>
+   <div>{{data['DeliveryDate']}}</div>
+ 
+ <h2 class = "header2"><u>Shipment Tracking Information</u></h2>
+    <h4 class = "myLabel">Shipment ID</h4>
+   <div>{{foundData['ShipmentID']}}</div>
+
+   <h4 class = "myLabel">Number of Shipment Boxes</h4>
+   <div>{{foundData['NumBoxes']}}</div>
+
+   <h4 class = "myLabel">Full/Partial Order</h4>
+   <div>{{foundData['full']}}</div>
+   <div>{{foundData['partial']}}</div>
+ 
+    <h4 class = "myLabel">Expected Delivery Date</h4>
+   <div>{{foundData['expectedDate']}}</div>
+ 
+   <h4 class = "myLabel">Delivery Date</h4>
+   <div>{{foundData['deliveryDate']}}</div>
+   </div>
+
+   <div class="col">
+   <h4 class = "myLabel">Method Of Delivery</h4>
+   <div>{{foundData['deliveryMethod']}}</div>
+
+   <h4 class = "myLabel">Notes</h4>
+   <div>{{foundData['notes']}}</div>
+    {% endif %}
+   <hr>
+</body>
+</html>

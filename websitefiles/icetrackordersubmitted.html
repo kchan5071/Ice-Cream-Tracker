@@ -1,0 +1,85 @@
+<!-- ICE TRACK ORDER ENTRY PAGE: ADDS ENTRIES TO THE DATABASE OF ORDERS -->
+ <!-- may need to add more pages here for fluidity -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <title>Ice Track Order Entry Submitted!</title>
+ <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icetrackstyles.css"/>
+ </head>
+ <body>
+   <script src="icetrackJS.js"></script>
+   <script src="helpButton.js"></script>
+   </script>
+   
+   <div class="identifier">
+         <a href="icetracklogin.html">Login</a> 
+         <a href="icetracksignup.html">Sign Up</a> 
+   </div>
+ 
+ <div class="header">
+   <h1>Enter an Order</h1>
+ </div>
+ 
+ <div class="topnav">
+     <a href="icetrackhome.html"">Home</a> 
+     <a href="icetrackorder.html">Order Entry</a>
+     <a href="icetrackinventory.html">Inventory Management</a>
+     <a href="icetrackshipment.html">Shipment Tracking</a>
+     <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+     <a href="icetrackFAQ.html">FAQ</a>
+   </div>
+ <p id = "rcorners1" class = "myLabel">Here is a record of your most recent submission.</p>
+  
+<h2 class = "header">Submission Successful!</h2>
+
+<h2 class = "header2">Details</h2>
+   <h4 class = "myLabel">Name</h4>
+   <div>{{data['CustomerName']}}</div>
+
+    <h4 class = "myLabel">Shipping Address</h4>
+   <div>{{data['ShippingAddress']}}</div>
+
+   <h4 class = "myLabel">Billing Address</h4>
+   <div>{{data['BillingAddress']}}</div>
+   
+   <h4 class = "myLabel">Order Description</h4>
+   <div>{{data['OrderDescription']}}</div>
+ 
+ <h2 class = "header2">Costs</h2>
+
+    <h4 class = "myLabel">Subtotal</h4>
+   <div>{{data['Subtotal']}}</div>
+
+   <h4 class = "myLabel">Shipping Cost</h4>
+   <div>{{data['ShippingCost']}}</div>
+
+   <h4 class = "myLabel">Total Cost</h4>
+   <div>{{data['TotalCost']}}</div>
+ 
+ <h2 class = "header2">Time Records</h2>
+
+    <h4 class = "myLabel">Order Date</h4>
+   <div>{{data['OrderDate']}}</div>
+ 
+   <h4 class = "myLabel">Payment Date</h4>
+   <div>{{data['PaymentDate']}}</div>
+
+   <h4 class = "myLabel">Estimated Arrival Date</h4>
+   <div>{{data['EstimatedArrivalDate']}}</div>
+ 
+ <h2 class = "header2">Customer Status</h2>
+
+    <h4 class = "myLabel">Customer Status</h4>
+    <div>{{data['CustomerStatus']}}</div>
+
+ <p id = "rcorners1" class = "myLabel">Thank you for updating our records!</p>
+ 
+ </body>
+ </html>
+ 

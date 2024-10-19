@@ -25,6 +25,9 @@ def main():
     for i in range(len(db_connector.tables)):
         print(db_connector.columns[i])
 
+
+    print(db_connector.search_column('customer', 'password', 'chicken'))
+
     # print("Data: ")
     # print(db_connector.fetch_all(table))
 

@@ -1,0 +1,123 @@
+<!-- ICE TRACK TROUBLE TICKET MANAGEMENT PAGE: ALLOWS YOU TO SUBMIT TROUBLE TICKETS TO THE SYSTEM-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Ice Track Ticket Management</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icetrackstyles.css"/>
+</head>
+<body>
+
+  <div class="identifier">
+    <!--if logged in: Who is currently logged in 
+        else: login button 
+        can add: colors signifying the hierarchy of permissions -->
+        <a href="icetracklogin.html">Login</a> 
+        <a href="icetracksignup.html">Sign Up</a> 
+  </div>
+
+<div class="header">
+  <h1>Trouble Ticket Management</h1>
+</div>
+
+<div class="topnav">
+  <a href="icetrackhome.html"">Home</a> 
+  <a href="icetrackorder.html">Order Entry</a>
+  <a href="icetrackinventory.html">Inventory Management</a>
+  <a href="icetrackshipment.html">Shipment Tracking</a>
+  <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+  <a href="icetrackFAQ.html">FAQ</a>
+</div>
+<p id = "rcorners1" class = "myLabel"> 
+  This page allows you to send any issues to the company in appropriate detail! 
+  <br>
+  <br>
+  Enter one order at a time and remember to review information before submitting.
+</p>
+
+    <form action="/orderentryform/{{orderentryform['id']}}/submission">
+      <h2 class = "header2"><u>Trouble Ticket Form</u></h2>
+
+      <!-- Date Problem Reported -->
+      <div class="input_group2" id="rcorners5">
+        <label for="" class = "myLabel">Today's Date</label>
+        <input type="date" required id="rcorners4" name="todaysDate">
+        <button class="help_button" id="help-todaysDate">?</button>   
+        <div id="myModal-todaysDate" class="modal">
+            <div class="modal-content">
+                <span class="close" data-modal="myModal-todaysDate">&times;</span>
+                <p>Enter today's date (the date of ticket submission).</p>
+            </div>
+        </div>
+      </div>
+
+    <!-- Source: Name of Reporter -->
+      <div class="input_group2" id = "rcorners5">
+        <label for="" class = "myLabel">Name</label>
+        <input type="text"required id="rcorners4" name = "sourceName" placeholder = "Tom Brady">  
+        <button class="help_button" id="help-sourceName">?</button>   
+        <div id="myModal-sourceName" class="modal">
+          <div class="modal-content">
+              <span class="close" data-modal="myModal-sourceName">&times;</span>
+              <p>Enter your name.</p>
+          </div>
+      </div>
+      </div>
+
+      <!-- Date Problem Detected-->
+      <div class="input_group2" id="rcorners5">
+        <label for="" class = "myLabel">Date Detected</label>
+        <input type="date" required id="rcorners4" name="detectionDate">
+        <button class="help_button" id="help-detectionDate">?</button>   
+        <div id="myModal-detectionDate" class="modal">
+            <div class="modal-content">
+                <span class="close" data-modal="myModal-detectionDate">&times;</span>
+                <p>Select the date the problem was detected (can vary from submission date).</p>
+            </div>
+        </div>
+      </div>
+
+    <!-- Type of Problem -->
+      <div class="input_group2" id="rcorners5">
+        <label for="" class = "myLabel">Type of Problem</label>
+        <select id="rcorners4" name="problemType" multiple required>
+            <option value="preferred">Big</option>
+            <option value="ok" selected>Decent</option>
+            <option value="shaky">Small</option>
+            <!-- Change these values to actual applicable problems -->
+        </select>
+        <button class="help_button" id="help-problemType">?</button>   
+        <div id="myModal-problemType" class="modal">
+            <div class="modal-content">
+                <span class="close" data-modal="myModal-problemType">&times;</span>
+                <p>Select the most applicable/ closest problem to your concerns.</p>
+            </div>
+        </div>
+      </div>  
+
+        <!-- Description of Problem -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Problem Description</label>
+            <textarea id="rcorners4" required rows="2" name="problemDescription"></textarea>
+            <button class="help_button" id="help-description">?</button>   
+            <div id="myModal-description" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-description">&times;</span>
+                    <p>Describe the issue in as much detail as possible, including any relating information.</p>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" class="submit_button" style = "align-content: center;">
+    </form>
+
+    <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit.</p>
+    <script src="helpButtonTicket.js"></script>
+
+</body>
+</html>
