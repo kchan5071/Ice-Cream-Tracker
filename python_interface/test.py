@@ -25,8 +25,12 @@ def main():
     for i in range(len(db_connector.tables)):
         print(db_connector.columns[i])
 
+    db_connector.insert_row('customer', ['wendy', 'dave', 'ok'])
 
-    print(db_connector.search_column('customer', 'password', 'chicken'))
+
+    print(db_connector.search_column('customer', 'company', 'wendy'))
+
+    db_connector.delete_row('customer', 'password', 'dave')
 
     # print("Data: ")
     # print(db_connector.fetch_all(table))

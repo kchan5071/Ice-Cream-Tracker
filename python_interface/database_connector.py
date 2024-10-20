@@ -68,7 +68,7 @@ class DatabaseWrapper:
         except Exception as e:
             print('Error fetching column names')
             print('Table not found: ', table)
-            print(f'SELECT * FROM {table}')
+            print(f'SELECT * FROM {self.schema}.{table}')
             print(e)
     
     def fetch_all(self, table):
@@ -94,7 +94,7 @@ class DatabaseWrapper:
         
     def insert_data(self, table, data):
         index = self.get_table_index(table)
-        query = f"INSERT INTO {self.schema}.{table} ({','.join(self.columns[index])}) VALUES ({data})"
+        query = f"INSERT INTO {self.schema}.{table} VALUES ({data})"
         try:
             self.cursor.execute(query)
             self.connection.commit()
@@ -171,5 +171,11 @@ class DatabaseWrapper:
             print("query: ", query)
             print(e)
             return None
+        
+
+    def insert_row(self, table, values):
+        data_list = [str(x) for x in values]
+        data = "'" + "', '".join(data_list) + "'"
+        self.insert_data(table, data)
 
         
