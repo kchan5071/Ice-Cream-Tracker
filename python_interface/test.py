@@ -14,7 +14,7 @@ def main():
 
     db_connector = DatabaseWrapper(user, password, host, port, database, schema)
     db_connector.connect()
-    # db_connector.insert_data(table, data)
+    db_connector.insert_data(table, data)
 
     #print table names
     print("Tables: ")
@@ -35,7 +35,7 @@ def main():
     # print("Data: ")
     # print(db_connector.fetch_all(table))
 
-    # #add second row
+    # # #add second row
     # name = 'Mikaela Software'
     # order_number = 125
     # time = '2021-06-01 11:00:00'
@@ -46,16 +46,16 @@ def main():
     # print("Data: ")
     # print(db_connector.fetch_all(table))
 
-    # #delete row
+    # # #delete row
     # db_connector.delete_row(table, 'name', 'Sigfriend Software')
     
-    # print("Data: ")
+    # # print("Data: ")
     # print(db_connector.fetch_all(table))
 
-    # #clear table
+    # # #clear table
     # db_connector.clear_table(table)
 
-    db_connector.close()
+    # db_connector.close()
 
     
 
