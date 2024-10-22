@@ -36,12 +36,15 @@
 
     <p id="rcorners1" class = "myLabel"> Enter identifiable information so that we may retrieve your shipment information.</p>
 
-    <form action="/orderentryform/{{orderentryform['id']}}/submission">
+    <!-- <form action="/orderentryform/{{orderentryform['id']}}/submission"> -->
+    
+<!-- Input Formatting (Form Creation) -->
+    <form id = "shipmentForm" method="POST" name="data">
       <h2 class = "header2"><u>Find Your Shipment</u></h2>
         <!-- The Customer's Name -->
         <div class="input_group2" id = "rcorners5">
             <label for="" class = "myLabel">Order Name (Your name as a Customer)</label>
-            <input type="text"required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
+            <input type="text" required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
             <button class="help_button" id="help-orderName">?</button>   
             <div id="myModal-orderName" class="modal">
                 <div class="modal-content">
@@ -54,7 +57,7 @@
         <!-- Shipping Address -->
         <div class="input_group2" id="rcorners5">
             <label for="" class = "myLabel">Shipping Address</label>
-            <input type="text" required id="rcorners4" name="ShippingAddress">
+            <input type="text" id="rcorners4" name="ShippingAddress">
             <button class="help_button" id="help-shippingAddress">?</button>   
             <div id="myModal-shippingAddress" class="modal">
                 <div class="modal-content">
@@ -67,7 +70,7 @@
         <!-- Shipment Date -->
        <div class="input_group2" id="rcorners5">
             <label for="" class = "myLabel">Shipment Date</label>
-            <input type="date" required id="rcorners4" name="ShipmentDate">
+            <input type="date" id="rcorners4" name="ShipmentDate">
             <button class="help_button" id="help-shipmentDate">?</button>   
             <div id="myModal-shipmentDate" class="modal">
                 <div class="modal-content">
@@ -80,7 +83,7 @@
         <!-- Expected Delivery Date -->
         <div class="input_group2" id="rcorners5">
             <label for="" class = "myLabel">Expected Delivery Date</label>
-            <input type="date" required id="rcorners4" name="deliveryDate">
+            <input type="date" id="rcorners4" name="expectedDate">
             <button class="help_button" id="help-deliveryDate">?</button>   
             <div id="myModal-deliveryDate" class="modal">
                 <div class="modal-content">
@@ -95,49 +98,99 @@
     </form>
     <script src="helpButtonShip.js"></script>
     <hr>
+
+    <script>
+        // Function to capture and JSONify form data on submission
+        document.getElementById('shipmentForm').addEventListener('submit', function(event) {
+          event.preventDefault();  // Prevent default form submission
+  
+          // Capture form data
+          const formData = new FormData(this);
+          const jsonObject = {};
+  
+          // Convert FormData to a JSON object
+          formData.forEach((value, key) => {
+            // Handle multiple select inputs properly
+            if (jsonObject[key]) {
+              if (Array.isArray(jsonObject[key])) {
+                jsonObject[key].push(value);
+              } else {
+                jsonObject[key] = [jsonObject[key], value];
+              }
+            } else {
+              jsonObject[key] = value;
+            }
+          });
+  
+          // Convert JSON object to a string
+          const jsonString = JSON.stringify(jsonObject);
+  
+          // Log the JSON string to the console (temporarily)
+          console.log(jsonString);
+  
+          // Store JSON data in localStorage
+          localStorage.setItem('shipmentForm',jsonString);
+  
+          // Redirects to the order submitted page
+          window.location.href = 'icetrackshipment.html';
+  
+          // Edit to send the JSON data to the server
+          // fetch('/your-server-endpoint', {
+          //   method: 'POST',
+          //   headers: { 'Content-Type': 'application/json' },
+          //   body: jsonString
+          // })
+        });
+      </script>
+
+<!-- Returned Information from Search -->
+<div id="shipmentSummary"></div>
+<div id="shipmentFound"></div>
+
+<script>
+  // Retrieve JSON data from localStorage
+  const jsonString = localStorage.getItem('shipmentForm');
+
+  // Parse the JSON string back to an object
+  const orderData = JSON.parse(jsonString);
+
+  // Get the div to display the order summary
+  const shipmentSummaryDiv = document.getElementById('shipmentSummary');
+  const shipmentSummaryFoundDiv = document.getElementById('shipmentFound');
+
+  // The shipmentForm data echoes what was entered from "Find Your Shipment"
+  if (shipmentForm) {
+    const orderHTML = `
+     <h2 class = "header">Matching Shipment Information</h2>
+     
+      <p><strong><h4 class = "myLabel">Name</h4></strong> ${orderData.CustomerName}</p>
+      <p><strong><h4 class = "myLabel">Shipping Address</h4></strong> ${orderData.ShippingAddress}</p>
+      <p><strong><h4 class = "myLabel">Shipment Date</h4></strong> ${orderData.ShipmentDate}</p>
+      <p><strong><h4 class = "myLabel">Expected Delivery Date</h4></strong> ${orderData.expectedDate}</p>
+    ` ;
+    shipmentSummaryDiv.innerHTML = orderHTML;
+  } else {
+    shipmentSummaryDiv.innerHTML = '<p>No shipment data entered.</p>';
+   }
+
+//    The returned data from the database would be "shipmentFoundForm"
+   if (shipmentFoundForm) {
+    const shipmentHTML = `
+    <h2 class = "header2"><u>Shipment Tracking Information</u></h2>
+      <p><strong><h4 class = "myLabel">Shipment ID</h4></strong> ${orderData.ShipmentID}</p>
+      <p><strong><h4 class = "myLabel">Number of Shipment Boxes</h4></strong> ${orderData.NumBoxes}</p>
+      <p><strong><h4 class = "myLabel">Full/Partial Order</h4></strong> ${orderData.Full} ${orderData.Partial}</p>
+      <p><strong><h4 class = "myLabel">Expected Delivery Date</h4></strong> ${orderData.expectedDate}</p>
+      <p><strong><h4 class = "myLabel">Delivery Date</h4></strong> ${orderData.deliveryDate}</p>
+      <p><strong><h4 class = "myLabel">Method Of Delivery</h4></strong> ${orderData.deliveryMethod}</p>
+      <p><strong><h4 class = "myLabel">Notes</h4></strong> ${orderData.notes}</p>
+    `;
+    shipmentSummaryFoundDiv.innerHTML = shipmentHTML;
+  } else {
+    shipmentSummaryFoundDiv.innerHTML = '<p>No shipment data found.</p>';
+  }
+</script>
     
-    <!-- Returned Information from Search -->
- {% if 'shipmentID' in orders %} <!--flask statements that allow us to control vision --> 
-    <h2 class = "header">Matching Shipment Information</h2>
-
-<h2 class = "header2"><u>Shipment Details</u></h2>
-   <h4 class = "myLabel">Name</h4>
-   <div>{{data['CustomerName']}}</div>
-
-    <h4 class = "myLabel">Shipping Address</h4>
-   <div>{{data['ShippingAddress']}}</div>
-
-   <h4 class = "myLabel">Shipment Date</h4>
-   <div>{{data['ShipmentDate']}}</div>
-   
-   <h4 class = "myLabel">Delivery Date</h4>
-   <div>{{data['DeliveryDate']}}</div>
- 
- <h2 class = "header2"><u>Shipment Tracking Information</u></h2>
-    <h4 class = "myLabel">Shipment ID</h4>
-   <div>{{foundData['ShipmentID']}}</div>
-
-   <h4 class = "myLabel">Number of Shipment Boxes</h4>
-   <div>{{foundData['NumBoxes']}}</div>
-
-   <h4 class = "myLabel">Full/Partial Order</h4>
-   <div>{{foundData['full']}}</div>
-   <div>{{foundData['partial']}}</div>
- 
-    <h4 class = "myLabel">Expected Delivery Date</h4>
-   <div>{{foundData['expectedDate']}}</div>
- 
-   <h4 class = "myLabel">Delivery Date</h4>
-   <div>{{foundData['deliveryDate']}}</div>
-   </div>
-
-   <div class="col">
-   <h4 class = "myLabel">Method Of Delivery</h4>
-   <div>{{foundData['deliveryMethod']}}</div>
-
-   <h4 class = "myLabel">Notes</h4>
-   <div>{{foundData['notes']}}</div>
-    {% endif %}
    <hr>
 </body>
 </html>
