@@ -2,8 +2,21 @@ from datetime import datetime, timedelta
 from python_interface.database_connector import DatabaseWrapper
 
 
+# view order table
+def check_order_table(db_connector):
+    # Query to fetch all records from the order table
+    query = "SELECT * FROM tracker.order;"
+    # Execute the query and fetch the results
+    result = db_connector.send_query(query)
+    if result:
+        print("Order data:")
+        for row in result:
+            print(row)
+    else:
+        print("No data found in the Order table.")
+
 # check the inventory for available stock and get cost per item
-def check_inventory(flavor, size, quantity):
+def check_inventory(db_connector, flavor, size, quantity):
     query = f"""
         SELECT available, cost FROM tracker.inventory
         WHERE flavor = '{flavor}' AND size = '{size}'
@@ -26,9 +39,16 @@ def calculate_total(line_items, shipping_cost):
         flavor, size, quantity, item_cost = item
         total_cost += quantity * item_cost
     return total_cost
+
+def get_next_order_id(db_connector):
+    query = "SELECT COALESCE(MAX(id), 0) + 1 FROM tracker.order;"
+    result = db_connector.send_query(query)
+    return result[0][0] if result else 1
     
 # function to place order
-def place_order(company, shipping_address, billing_address, line_items, shipping_method, customer_status):
+def place_order(db_connector, company, shipping_address, billing_address, line_items, shipping_method, customer_status):
+    order_id = get_next_order_id(db_connector)
+    
     # default shipping cost (can change later)
     shipping_cost = 50
 
@@ -43,25 +63,48 @@ def place_order(company, shipping_address, billing_address, line_items, shipping
         return False
 
     # insert order into order table
-    order_date = datetime.now.strftime('%Y-%m-%d')
+    order_date = datetime.now().strftime('%Y-%m-%d')
     #estimated arrival time is default 7 days from order date
     estimated_arrival = (datetime.now() + timedelta(days=7)).strftime('%Y-%m-%d')
 
     for item in line_items:
         flavor, size, quantity, _ = item
-        is_available, item_cost = check_inventory(flavor, size, quantity)
+        is_available, item_cost = check_inventory(db_connector, flavor, size, quantity)
 
         # insert order and update inventory if item is availiable
         if is_available:
-            query = f"""
-                INSERT INTO tracker.order (company, boxes, order_date, estimated_arrival, shipping_method, shipping_address, billing_address, subtotal_cost, shipping_cost, total_cost)
-                VALUES ('{company}', {quantity}, '{order_date}', '{estimated_arrival}', '{shipping_method}', '{shipping_address}', '{billing_address}', {quantity * item_cost}, {shipping_cost}, {total_cost})
-            """
-            db_connector.send_query(query)
+
+            # CAN CHANGE BACK
+            # query = f"""
+            #     INSERT INTO tracker.order (company, boxes, order_date, estimated_arrival, shipping_method, shipping_address, billing_address, subtotal_cost, shipping_cost, total_cost)
+            #     VALUES ('{company}', {quantity}, '{order_date}', '{estimated_arrival}', '{shipping_method}', '{shipping_address}', '{billing_address}', {quantity * item_cost}, {shipping_cost}, {total_cost})
+            # """
+            # db_connector.send_query(query)
+
+            # Build the row for the order table
+            order_values = [
+                order_id,                # id
+                company,                 # company
+                quantity,                # boxes
+                order_date,              # order_date
+                estimated_arrival,        # estimated_arrival
+                '2055-01-01',                    # arrival (not known at order time) (hardcode date)
+                shipping_method,          # shipping_method
+                shipping_address,         # shipping_address
+                billing_address,          # billing_address
+                'In Transit',                    # shipping_status (not set initially) (hardcode)
+                quantity * item_cost,     # subtotal_cost
+                shipping_cost,            # shipping_cost
+                total_cost,               # total_cost
+                '2055-01-01'                     # payment_date (not known at order time) (hardcode)
+            ]
+
+            # Use __insert_row__ to insert the row
+            db_connector.__insert_row__('order', order_values)
 
             #update inventory by decreasing available and increasing committed
             update_inventory_query = f"""
-                UPDATE tracker."Inventory" SET available = available - {quantity}, committed = committed + {quantity}
+                UPDATE tracker.inventory SET available = available - {quantity}, committed = committed + {quantity}
                 WHERE flavor = '{flavor}' AND size = '{size}'
             """
             db_connector.send_query(update_inventory_query)
@@ -73,9 +116,20 @@ def place_order(company, shipping_address, billing_address, line_items, shipping
     print("Order placed successfully!")
     return True
 
-def create_invoice():
+def create_invoice(db_connector, order_id):
+    query = f"""
+        SELECT * FROM tracker.order WHERE id = {order_id}
+    """
+    result = db_connector.send_query(query)
+    if result:
+        print("Invoice for Order Id:", order_id)
+        print(result) #change format later
+    else:
+        print("Order not found.")
 
-def update_payment_status():
 
-def cancel_order():
+# make function later
+# def update_payment_status():
+
+# def cancel_order():
 
