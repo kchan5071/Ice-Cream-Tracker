@@ -93,7 +93,7 @@ class DatabaseWrapper:
             print(e)
             return None
         
-    def insert_data(self, table, primary_key, data):
+    def insert_row(self, table, primary_key, data):
         index = self.get_table_index(table)
         primary_key_column = self.get_primary_key(table)[0][0]
 
@@ -108,10 +108,19 @@ class DatabaseWrapper:
                     #update the data
                     self.update_row(table, self.columns[index][i + 1], split_data[i])
         else:
-            self.insert_row(table, [primary_key] + data.split(','))
+            self.__insert_row__(table, [primary_key] + data.split(','))
     
     def delete_from_name(self, table, name):
-        self.insert_row(table, [name])
+        query = f"DELETE FROM {self.schema}.{table} WHERE name = '{name}'"
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+            return name
+        except Exception as e:
+            print('Error deleting from name')
+            print("query: ", query)
+            print(e)
+            return None
         return name
     
     def clear_table(self, table):
@@ -205,7 +214,7 @@ class DatabaseWrapper:
             print(e)
             return None
         
-    def insert_row(self, table, values):
+    def __insert_row__(self, table, values):
         data_list = [str(x) for x in values]
         data = "'" + "', '".join(data_list) + "'"
         self.insert_data(table, data)
