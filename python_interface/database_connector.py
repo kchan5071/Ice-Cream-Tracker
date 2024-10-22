@@ -215,9 +215,22 @@ class DatabaseWrapper:
             return None
         
     def __insert_row__(self, table, values):
-        data_list = [str(x) for x in values]
-        data = "'" + "', '".join(data_list) + "'"
-        self.insert_data(table, data)
+        values_string = None
+        for value in values:
+            if values_string is None:
+                values_string = f"'{value}'"
+            else:
+                values_string += f", '{value}'"
+        query = f"INSERT INTO {self.schema}.{table} VALUES ({values_string})"
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+            return values
+        except Exception as e:
+            print('Error inserting row')
+            print("query: ", query)
+            print(e)
+            return None
 
     def update_from_id(self, table, id, column, value):
         query = f"UPDATE {self.schema}.{table} SET {column} = '{value}'"
