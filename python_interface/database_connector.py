@@ -93,25 +93,33 @@ class DatabaseWrapper:
             print(e)
             return None
         
-    def insert_data(self, table, primary_key, data):
+    def insert_row(self, table, primary_key, data):
         index = self.get_table_index(table)
         primary_key_column = self.get_primary_key(table)[0][0]
 
         # # Check if data exists
         search_result = self.search_column(table, primary_key_column, primary_key)
         if search_result:
-            split_data = data.split(',')
             #look for differences in data
-            for i in range(len(split_data)):
+            for i in range(len(data)):
                 #if data is different and NOT the primary key
-                if split_data[i] != search_result[0][i + 1] and self.columns[index][i + 1] != primary_key_column:
+                if data[i] != search_result[0][i + 1] and self.columns[index][i + 1] != primary_key_column:
                     #update the data
-                    self.update_row(table, self.columns[index][i + 1], split_data[i])
+                    self.update_from_primary_key(table, primary_key, self.columns[index][i + 1], data[i])
         else:
-            self.insert_row(table, [primary_key] + data.split(','))
+            self.__insert_row__(table, [primary_key] + data)
     
     def delete_from_name(self, table, name):
-        self.insert_row(table, [name])
+        query = f"DELETE FROM {self.schema}.{table} WHERE name = '{name}'"
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+            return name
+        except Exception as e:
+            print('Error deleting from name')
+            print("query: ", query)
+            print(e)
+            return None
         return name
     
     def clear_table(self, table):
@@ -150,7 +158,7 @@ class DatabaseWrapper:
                 return i
         return None
     
-    def update_row(self, table, column, new_value):
+    def update_row(self, table, column, new_value, primary_key):
         query = f"UPDATE {self.schema}.{table} SET {column} = '{new_value}'"
         try:
             self.cursor.execute(query)
@@ -205,14 +213,28 @@ class DatabaseWrapper:
             print(e)
             return None
         
-    def insert_row(self, table, values):
-        data_list = [str(x) for x in values]
-        data = "'" + "', '".join(data_list) + "'"
-        self.insert_data(table, data)
+    def __insert_row__(self, table, values):
+        values_string = None
+        for value in values:
+            if values_string is None:
+                values_string = f"'{value}'"
+            else:
+                values_string += f", '{value}'"
+        query = f"INSERT INTO {self.schema}.{table} VALUES ({values_string})"
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+            return values
+        except Exception as e:
+            print('Error inserting row')
+            print("query: ", query)
+            print(e)
+            return None
 
-    def update_from_id(self, table, id, column, value):
-        query = f"UPDATE {self.schema}.{table} SET {column} = '{value}'"
-        self.send_insert_query(query)
+    def update_from_primary_key(self, table, primary_key, column, value):
+        query = f"""UPDATE {self.schema}.{table} SET {column} = '{value}'
+                 WHERE {self.get_primary_key(table)[0][0]} = '{primary_key}'"""
+        self.cursor.execute(query)
         return value
 
         
