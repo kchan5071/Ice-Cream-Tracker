@@ -95,9 +95,7 @@ class DatabaseWrapper:
         
     def insert_data(self, table, primary_key, data):
         index = self.get_table_index(table)
-        print("Primary key: ")
         primary_key_column = self.get_primary_key(table)[0][0]
-        print(primary_key_column)
 
         # # Check if data exists
         search_result = self.search_column(table, primary_key_column, primary_key)
