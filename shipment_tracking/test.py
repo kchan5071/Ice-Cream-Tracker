@@ -1,32 +1,38 @@
+import sys
+import os
+
+# Add the parent directory (Ice-Cream-Tracker) to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from shipment_tracking.ShipmentTracking import Shipments, ShipmentSystem
+from shipment_tracking.admin_interface import admin_interface
+
+def main():   
+    # Create the shipment system
+    db = ShipmentSystem(user='admin', password='password', host='localhost', port='5432', database='icecreamtracker', schema='tracker')
     
-# Create the shipment system
-shipment_system = ShipmentSystem(user='brenda', password='password', host='localhost', port='5432', database='icecreamtracker', schema='tracker')
+    #example for id 1
+    db.add_shipment_info(1, 2, '2021-10-15', '2024-01-10', '2024-11-11', True, 'McDonalds')
+    print(db.get_shipment_info(1))
 
-# Add a shipment
-shipment1 = Shipments(full_or_partial=True, actual_delivery_date='2024-11-11', expected_delivery_date='2024-01-10', shipment_date='2024-10-15', num_boxes=2, id=1)
-shipment_system.insert_shipment(shipment1)
-
-shipment2 = Shipments(full_or_partial=True, actual_delivery_date='2024-12-12', expected_delivery_date='2024-02-10', shipment_date='2024-10-15', num_boxes=5, id=2)
-shipment_system.insert_shipment(shipment2)
-
-
-# Delete a shipment
-shipment_system.delete_shipment(1)
+    #undelivered shipment example
+    db.add_shipment_info(2, 2, '2024-10-15', '2024-01-10', None, True, 'McDonalds')
+    print(db.get_shipment_info(2))
     
-shipment3 = Shipments(full_or_partial=True, actual_delivery_date='2024-12-12', expected_delivery_date='2024-03-10', shipment_date='2024-10-15', num_boxes=6, id=3)
-shipment_system.insert_shipment(shipment3)
-
-info = shipment_system.get_shipment_info(3)
-print(info)
-
-# Fetch all shipments
-shipments = shipment_system.fetch_shipments()
-for shipment in shipments:
-    print(shipment)
-
-#clearing for next run
-shipment_system.clear_table('shipments')
-
-# Close the connection
-shipment_system.close()
+    #testing update status
+    db.update_shipment_info(2, '2024-11-11')
+    print(db.get_shipment_info(2))
+    
+    #db.get_methods_for_region('North America')
+    
+   # db.update_shipment_method(1, 'UPS', 'North America')
+    #print(db.get_shipment_info(1))
+    
+    #clear table for next run
+    db.clear_table('Order')
+    
+    # Close the connection
+    db.close()
+    
+if __name__ == '__main__':
+    main()
