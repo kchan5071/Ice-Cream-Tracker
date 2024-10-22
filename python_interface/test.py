@@ -34,8 +34,8 @@ def main():
 
     #test insertion
     table = 'customer'
-    data = 'burger, ok'
-    db_connector.insert_row(table, 'McDees',data)
+    data = ['shake', 'ok']
+    db_connector.insert_row(table, 'McDong',data)
     
     #print data from table
     print("Data: ")
