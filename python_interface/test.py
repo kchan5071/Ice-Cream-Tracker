@@ -23,30 +23,24 @@ def main():
     #print column names
     print("Columns: ")
     for i in range(len(db_connector.tables)):
-        print(db_connector.columns[i])
+        print(db_connector.tables[i], db_connector.columns[i])
 
-    # print("Data: ")
-    # print(db_connector.fetch_all(table))
+    #print all data in table
+    print("Data: ")
+    for table in db_connector.tables:
+        print("Table: ", table)
+        data = db_connector.fetch_all(table)
+        print(data)
 
-    # #add second row
-    # name = 'Mikaela Software'
-    # order_number = 125
-    # time = '2021-06-01 11:00:00'
-
-    # data = f"'{name}', '{time}', {order_number}"
-    # db_connector.insert_data(table, data)
-
-    # print("Data: ")
-    # print(db_connector.fetch_all(table))
-
-    # #delete row
-    # db_connector.delete_row(table, 'name', 'Sigfriend Software')
+    #test insertion
+    table = 'customer'
+    data = 'burger, ok'
+    db_connector.insert_data(table, 'bk',data)
     
-    # print("Data: ")
-    # print(db_connector.fetch_all(table))
-
-    # #clear table
-    # db_connector.clear_table(table)
+    #print data from table
+    print("Data: ")
+    data = db_connector.fetch_all(table)
+    print(data)
 
     db_connector.close()
 
