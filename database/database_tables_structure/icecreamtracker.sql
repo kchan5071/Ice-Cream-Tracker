@@ -18,10 +18,10 @@ BEGIN
       CREATE ROLE admin WITH LOGIN PASSWORD 'password';
    END IF;
 END
-$$;
+$$ LANGUAGE plpgsql;
 
 
-DROP SCHEMA IF EXISTS tracker CASCADE;;
+DROP SCHEMA IF EXISTS tracker CASCADE;
 
 
 DROP TABLE IF EXISTS tracker.Customer;
@@ -29,6 +29,7 @@ DROP TABLE IF EXISTS tracker.Employee;
 DROP TABLE IF EXISTS tracker.Inventory;
 DROP TABLE IF EXISTS tracker.Order;
 DROP TABLE IF EXISTS tracker.ticket;
+DROP TABLE IF EXISTS tracker.ShipmentMethods;
 
 
 
@@ -149,10 +150,21 @@ CREATE TABLE tracker.Order (
     subtotal_cost numeric,
     shipping_cost numeric,
     total_cost numeric,
-    payment_date date
+    payment_date date,
+    full_or_partial boolean -- True for full order, False for partial
 );
 
 
+-- table for shipment methods
+CREATE TABLE tracker.ShipmentMethods (
+    id SERIAL PRIMARY KEY,
+    method_name VARCHAR(50) NOT NULL,
+    region VARCHAR(100) NOT NULL
+);
+
+-- linking orders to a shipping method
+ALTER TABLE tracker.Order
+ADD COLUMN shipment_method_id INTEGER REFERENCES tracker.ShipmentMethods(id);
 
 --
 -- TOC entry 220 (class 1259 OID 25092)
@@ -171,6 +183,15 @@ CREATE TABLE tracker.ticket (
     resolution character varying
 );
 
+
+--CREATE TABLE tracker.shipments(
+--    id integer NOT NULL,
+--    num_boxes integer,
+--    shipment_date date,
+--    expected_delivery_date date,
+--    actual_delivery_date date,
+--    full_or_partial boolean -- True for full order, False for partial
+--);
 
 
 --
@@ -242,7 +263,8 @@ COPY tracker.ticket (id, source, type, description, status, report_date, date_de
 2	bk	shipping	product lost while shipping order	closed	2024-09-15	2024-09-15	2024-09-15	shipping replaced lost items
 \.
 
-
+--COPY tracker.shipments (id, num_boxes, shipment_date, expected_delivery_date, actual_delivery_date, full_or_partial) FROM stdin;
+--0	5	2024-09-15	2024-09-30	2024-09-30	TRUE \N \N
 --
 -- TOC entry 4828 (class 0 OID 0)
 -- Dependencies: 217
@@ -295,6 +317,9 @@ ALTER TABLE ONLY tracker.Order
 
 ALTER TABLE ONLY tracker.ticket
     ADD CONSTRAINT ticket_pkey PRIMARY KEY (id);
+
+--ALTER TABLE ONLY tracker.shipments
+--    ADD CONSTRAINT shipments_pkey PRIMARY KEY (id);
 
 
 
