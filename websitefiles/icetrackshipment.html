@@ -43,7 +43,7 @@
       <h2 class = "header2"><u>Find Your Shipment</u></h2>
         <!-- The Customer's Name -->
         <div class="input_group2" id = "rcorners5">
-            <label for="" class = "myLabel">Order Name (Your name as a Customer)</label>
+            <label for="" class = "myLabel">Order Name</label>
             <input type="text" required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
             <button class="help_button" id="help-orderName">?</button>   
             <div id="myModal-orderName" class="modal">
@@ -123,7 +123,15 @@
           });
   
           // Convert JSON object to a string
-          const jsonString = JSON.stringify(jsonObject);
+          const jsonString = JSON.stringify(jsonObject, null, 2);
+
+          // Writes JSON String to shipmentData.json
+            // Create a Blob with JSON data and initiate a download 
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'shipmentData.json';  // Name of the file
+            link.click();  // Programmatically trigger the download
   
           // Log the JSON string to the console (temporarily)
           console.log(jsonString);
@@ -134,12 +142,20 @@
           // Redirects to the order submitted page
           window.location.href = 'icetrackshipment.html';
   
-          // Edit to send the JSON data to the server
-          // fetch('/your-server-endpoint', {
-          //   method: 'POST',
-          //   headers: { 'Content-Type': 'application/json' },
-          //   body: jsonString
-          // })
+          // Send the JSON data to the PHP script
+        fetch('save_shipment.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonString
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
         });
       </script>
 
