@@ -14,7 +14,7 @@ def main():
 
     db_connector = DatabaseWrapper(user, password, host, port, database, schema)
     db_connector.connect()
-    # db_connector.insert_data(table, data)
+    db_connector.insert_data(table, data)
 
     #print table names
     print("Tables: ")
