@@ -99,6 +99,8 @@ def place_order(db_connector, company, shipping_address, billing_address, line_i
                 '2055-01-01'                     # payment_date (not known at order time) (hardcode)
             ]
 
+            print(order_values)
+
             # Use __insert_row__ to insert the row
             db_connector.__insert_row__('order', order_values)
 
