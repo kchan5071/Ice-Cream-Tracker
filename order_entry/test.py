@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from python_interface.database_connector import DatabaseWrapper
-from OrderEntry import place_order, create_invoice, check_order_table
+from OrderEntry import place_order, create_invoice, check_order_table, clear_order_table
 
 
 def main():
@@ -45,6 +45,7 @@ def main():
         ('chocolate', 'M', 5, 3.00)
     ]
 
+    # clear_order_table(db_connector)
     check_order_table(db_connector)
 
     print("Testing place_order function...")
@@ -53,6 +54,18 @@ def main():
         print("Order placed successfully!")
     else:
         print("Order placement failed!")
+
+    check_order_table(db_connector)
+
+    query = "SELECT * FROM tracker.inventory;"
+    result = db_connector.send_query(query)
+    
+    if result:
+        print("Inventory data:")
+        for row in result:
+            print(row)
+    else:
+        print("No data found in the Inventory table.")
 
     db_connector.close()
 

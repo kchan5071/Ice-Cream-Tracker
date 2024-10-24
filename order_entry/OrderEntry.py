@@ -1,6 +1,21 @@
 from datetime import datetime, timedelta
 from python_interface.database_connector import DatabaseWrapper
 
+#get inventory id from flavor and size in order to update the values
+def get_inventory_id(db_connector, flavor, size):
+    query = f"SELECT id FROM tracker.inventory WHERE flavor = '{flavor}' AND size = '{size}'"
+    result = db_connector.send_query(query)
+    return result[0][0] if result else None
+
+# empty the order table
+def clear_order_table(db_connector):
+    try:
+        query = "DELETE FROM tracker.order;"
+        db_connector.send_query(query)
+        print("Order table cleared successfully.")
+    except Exception as e:
+        print("Error clearing the order table.")
+        print(e)
 
 # view order table
 def check_order_table(db_connector):
@@ -47,7 +62,6 @@ def get_next_order_id(db_connector):
     
 # function to place order
 def place_order(db_connector, company, shipping_address, billing_address, line_items, shipping_method, customer_status):
-    order_id = get_next_order_id(db_connector)
     
     # default shipping cost (can change later)
     shipping_cost = 50
@@ -70,16 +84,11 @@ def place_order(db_connector, company, shipping_address, billing_address, line_i
     for item in line_items:
         flavor, size, quantity, _ = item
         is_available, item_cost = check_inventory(db_connector, flavor, size, quantity)
-
+        order_id = get_next_order_id(db_connector)
+        print(order_id)
+        
         # insert order and update inventory if item is availiable
         if is_available:
-
-            # CAN CHANGE BACK
-            # query = f"""
-            #     INSERT INTO tracker.order (company, boxes, order_date, estimated_arrival, shipping_method, shipping_address, billing_address, subtotal_cost, shipping_cost, total_cost)
-            #     VALUES ('{company}', {quantity}, '{order_date}', '{estimated_arrival}', '{shipping_method}', '{shipping_address}', '{billing_address}', {quantity * item_cost}, {shipping_cost}, {total_cost})
-            # """
-            # db_connector.send_query(query)
 
             # Build the row for the order table
             order_values = [
@@ -99,17 +108,37 @@ def place_order(db_connector, company, shipping_address, billing_address, line_i
                 '2055-01-01'                     # payment_date (not known at order time) (hardcode)
             ]
 
+            print("Order values: ")
             print(order_values)
 
             # Use __insert_row__ to insert the row
             db_connector.__insert_row__('order', order_values)
 
             #update inventory by decreasing available and increasing committed
-            update_inventory_query = f"""
-                UPDATE tracker.inventory SET available = available - {quantity}, committed = committed + {quantity}
-                WHERE flavor = '{flavor}' AND size = '{size}'
-            """
-            db_connector.send_query(update_inventory_query)
+            # update_inventory_query = f"""
+            #     UPDATE tracker.inventory SET available = available - {quantity}, committed = committed + {quantity}
+            #     WHERE flavor = '{flavor}' AND size = '{size}'
+            # """
+            # db_connector.send_query(update_inventory_query)
+            inventory_id = get_inventory_id(db_connector, flavor, size)
+
+            if inventory_id:
+                # Use the id for updating available and committed stock
+
+                # retrieve current available and committed values
+                query = f"SELECT available, committed FROM tracker.inventory WHERE id = {inventory_id}"
+                result = db_connector.send_query(query)
+
+                if result:
+                    curr_available = result[0][0]
+                    curr_committed = result[0][1]
+                    new_available = curr_available - quantity
+                    new_committed = curr_committed + quantity
+                    db_connector.update_from_primary_key('inventory', inventory_id, 'available', new_available)
+                    db_connector.update_from_primary_key('inventory', inventory_id, 'committed', new_committed)
+            else:
+                print(f"Error: Could not find inventory item for {flavor} - {size}")
+                return False
 
         else:
             print(f"Insufficient stock for {flavor} - {size}.")

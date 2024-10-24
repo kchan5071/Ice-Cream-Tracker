@@ -42,7 +42,7 @@ def main():
     data = db_connector.fetch_all(table)
     print(data)
 
-    # db_connector.close()
+    db_connector.close()
 
     
 
