@@ -1,0 +1,75 @@
+<!-- ICE TRACK TROUBLE TICKET MANAGEMENT PAGE: ALLOWS YOU TO SUBMIT TROUBLE TICKETS TO THE SYSTEM-->
+ <!-- ICE TRACK TICKET SUBMISSION PAGE: A RECEIPT TO USER THAT THE TICKET WAS SUBMITTED AND WITH WHAT CONTENTS-->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <title>Ice Track Trouble Ticket Submitted!</title>
+ <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icetrackstyles.css"/>
+ </head>
+ <body>
+   <script src="icetrackJS.js"></script>
+   <script src="helpButton.js"></script>
+   </script>
+   
+   <div class="identifier">
+         <a href="icetracklogin.html">Login</a> 
+         <a href="icetracksignup.html">Sign Up</a> 
+   </div>
+ 
+ <div class="header">
+   <h1>Trouble Ticket Submission</h1>
+ </div>
+ 
+ <div class="topnav">
+     <a href="icetrackhome.html"">Home</a> 
+     <a href="icetrackorder.html">Order Entry</a>
+     <a href="icetrackinventory.html">Inventory Management</a>
+     <a href="icetrackshipment.html">Shipment Tracking</a>
+     <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+     <a href="icetrackFAQ.html">FAQ</a>
+   </div>
+ <p id = "rcorners1" class = "myLabel">Here is a record of your most recent submission.</p>
+  
+<h2 class = "header">Submission Successful!</h2>
+
+<div id="ticketSummary"></div>
+
+<script>
+  // Retrieve JSON data from localStorage
+  const jsonString = localStorage.getItem('troubleTicketData');
+
+  // Parse the JSON string back to an object
+  const troubleTicketData = JSON.parse(jsonString);
+
+  // Get the div to display the order summary
+  const ticketSummaryDiv = document.getElementById('ticketSummary');
+
+  // Display the JSON data
+  if (troubleTicketData) {
+    const ticketHTML = `
+     <h2 class = "header2">Trouble Ticket Summary</h2>
+      <p><strong><h4 class = "myLabel">Today's Date</h4></strong> ${troubleTicketData.todaysDate}</p>
+      <p><strong><h4 class = "myLabel">Name</h4></strong> ${troubleTicketData.sourceName}</p>
+      <p><strong><h4 class = "myLabel">Date Detected</h4></strong> ${troubleTicketData.detectionDate}</p>
+      <p><strong><h4 class = "myLabel">Type of Problem</h4></strong> ${troubleTicketData.problemType}</p>
+      <p><strong><h4 class = "myLabel">Problem Description</h4></strong> ${troubleTicketData.problemDescription}</p>
+    `;
+    ticketSummaryDiv.innerHTML = ticketHTML;
+  } else {
+    ticketSummaryDiv.innerHTML = '<p>No order data found.</p>';
+  }
+</script>
+
+
+
+ <p id = "rcorners1" class = "myLabel">Thank you for updating our records!</p>
+ 
+ </body>
+ </html>
+ 

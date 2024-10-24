@@ -34,17 +34,19 @@
 
     <p id="rcorners1" class = "myLabel"> Enter one order at a time and remember to review information before submitting.</p>
 
-    <form action="/orderentryform/{{orderentryform['id']}}/submission">
-      <h2 class = "header2"><u>Order Details</u></h2>
+    <!-- <form action="/orderentryform/{{orderentryform['id']}}/submission" method="POST" name="orderEntryForm"> -->
+    
+    <form id = "orderForm" method="POST" name="data">
+        <h2 class = "header2"><u>Order Details</u></h2>
         <!-- string inputs for descriptive values -->
         <div class="input_group2" id = "rcorners5">
-            <label for="" class = "myLabel">Name</label>
+            <label for="name" class = "myLabel">Name</label>
             <input type="text"required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
          </div>
 
         <!-- Shipping Address -->
         <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Shipping Address</label>
+            <label for="shippingAddress" class = "myLabel">Shipping Address</label>
             <input type="text" required id="rcorners4" name="ShippingAddress">
             <button class="help_button" id="help-shipping">?</button>   
             <div id="myModal-shipping" class="modal">
@@ -57,7 +59,7 @@
 
         <!-- Billing Address -->
         <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Billing Address</label>
+            <label for="billingAddress" class = "myLabel">Billing Address</label>
             <input type="text" required id="rcorners4" name="BillingAddress">
             <button class="help_button" id="help-billing">?</button>   
             <div id="myModal-billing" class="modal">
@@ -70,7 +72,7 @@
 
         <!-- Order Description -->
         <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Order Description</label>
+            <label for="orderDescription" class = "myLabel">Order Description</label>
             <textarea id="rcorners4" required rows="2" name="OrderDescription"></textarea>
             <button class="help_button" id="help-description">?</button>   
             <div id="myModal-description" class="modal">
@@ -83,21 +85,21 @@
 
       <h2 class = "header2"><u>Costs</u></h2> <!-- numeric inputs for numeric values -->
         <div class="input_group" id="rcorners5">
-            <label for="amount" class = "myLabel">Subtotal</label>
+            <label for="subtotal" class = "myLabel">Subtotal</label>
             <input type="number" id="amount" name="Subtotal" min="0" step="0.01" required>
         </div>
         <div class="input_group2" id="rcorners5">
-            <label for="amount" class = "myLabel">Shipping Cost</label>
+            <label for="shippingCost" class = "myLabel">Shipping Cost</label>
             <input type="number" id="amount" name="ShippingCost" min="0" step="0.01" required>
         </div>
         <div class="input_group2" id="rcorners5">
-            <label for="amount" class = "myLabel">Total Cost</label>
+            <label for="totalCost" class = "myLabel">Total Cost</label>
             <input type="number" id="amount" name="TotalCost" min="0" step="0.01" required>
         </div>
 
       <h2 class = "header2"><u>Time Records</u></h2> <!-- date-type input values -->
         <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Order Date</label>
+            <label for="orderDate" class = "myLabel">Order Date</label>
             <input type="date" required id="rcorners4" name="OrderDate">
             <button class="help_button" id="help-orderDate">?</button>   
             <div id="myModal-orderDate" class="modal">
@@ -109,7 +111,7 @@
         </div>
 
         <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Payment Date</label>
+            <label for="paymentDate" class = "myLabel">Payment Date</label>
             <input type="date" required id="rcorners4" name="PaymentDate">
             <button class="help_button" id="help-paymentDate">?</button>   
             <div id="myModal-paymentDate" class="modal">
@@ -124,7 +126,7 @@
         <!-- Customer Status -->
       <h2 class = "header2"><u>Customer Status</u></h2>
         <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Customer Status</label>
+            <label for="customerStatus" class = "myLabel">Customer Status</label>
             <select id="rcorners4" name="CustomerStatus" multiple required>
                 <option value="preferred">Preferred</option>
                 <option value="ok" selected>Ok</option>
@@ -139,11 +141,70 @@
             </div>
         </div>
 
-        <input type="submit" class="submit_button">
+        <input type="submit" class="submit_button" value="Submit">
     </form>
+    <!-- <script src="postOrderEntry.js"></script> -->
 
     <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit.</p>
 
+
+     <script>
+      // Function to capture and JSONify form data on submission
+      document.getElementById('orderForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent default form submission
+
+        // Capture form data
+        const formData = new FormData(this);
+        const jsonObject = {};
+
+        // Convert FormData to a JSON object
+        formData.forEach((value, key) => {
+          // Handle multiple select inputs properly
+          if (jsonObject[key]) {
+            if (Array.isArray(jsonObject[key])) {
+              jsonObject[key].push(value);
+            } else {
+              jsonObject[key] = [jsonObject[key], value];
+            }
+          } else {
+            jsonObject[key] = value;
+          }
+        });
+
+        // Convert JSON object to a string
+        // const jsonString = JSON.stringify(jsonObject);
+        const jsonString = JSON.stringify(jsonObject, null, 2);  // Pretty-print JSON
+
+        // Writes JSON String to orderData.json
+        // Create a Blob with JSON data and initiate a download 
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'orderData.json';  // Name of the file
+        link.click();  // Programmatically trigger the download
+
+        // Log the JSON string to the console (temporarily)
+        console.log(jsonString);
+
+        // Store JSON data in localStorage
+        localStorage.setItem('orderData',jsonString);
+
+        // Send the JSON data to the PHP script
+        fetch('save_order.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonString
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = 'icetrackordersubmitted.html';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      });
+    </script>
     <script src="helpButton.js"></script>
 </body>
 </html>
