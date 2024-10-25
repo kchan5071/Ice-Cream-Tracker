@@ -87,9 +87,11 @@
       <div class="input_group2" id="rcorners5">
         <label for="" class = "myLabel">Type of Problem</label>
         <select id="rcorners4" name="problemType" multiple required>
-            <option value="preferred">Big</option>
-            <option value="ok" selected>Decent</option>
-            <option value="shaky">Small</option>
+            <option value="inventory">Inventory Management</option>
+            <option value="order">Order Entry</option>
+            <option value="shipment">Shipment Tracking</option>
+            <option value="site">Website Navigation</option>
+            <option value="other" selected>Other</option>
             <!-- Change these values to actual applicable problems -->
         </select>
         <button class="help_button" id="help-problemType">?</button>   
@@ -141,7 +143,15 @@
         });
 
         // Convert JSON object to a string
-        const jsonString = JSON.stringify(jsonObject);
+        const jsonString = JSON.stringify(jsonObject, null, 2);
+
+        // Writes JSON String to ticketData.json
+          // Create a Blob with JSON data and initiate a download 
+          const blob = new Blob([jsonString], { type: 'application/json' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'ticketData.json';  // Name of the file
+          link.click();  // Programmatically trigger the download
 
         // Log the JSON string to the console (temporarily)
         console.log(jsonString);
@@ -149,15 +159,20 @@
         // Store JSON data in localStorage
         localStorage.setItem('troubleTicketData',jsonString);
 
-        // Redirects to the order submitted page
-        window.location.href = 'icetrackticketsubmitted.html';
-
-        // Edit to send the JSON data to the server
-        // fetch('/your-server-endpoint', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: jsonString
-        // })
+        // Send the JSON data to the PHP script
+        fetch('save_ticket.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonString
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = 'icetrackordersubmitted.html';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
       });
     </script>
 
