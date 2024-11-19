@@ -30,7 +30,7 @@ DROP TABLE IF EXISTS tracker.Inventory;
 DROP TABLE IF EXISTS tracker.Order;
 DROP TABLE IF EXISTS tracker.ticket;
 DROP TABLE IF EXISTS tracker.ShipmentMethods;
-
+DROP TABLE IF EXISTS tracker.Shipment_vendors
 
 
 SET statement_timeout = 0;
@@ -157,9 +157,18 @@ CREATE TABLE tracker.Order (
 
 -- table for shipment methods
 CREATE TABLE tracker.ShipmentMethods (
-    id SERIAL PRIMARY KEY,
-    method_name VARCHAR(50) NOT NULL,
-    region VARCHAR(100) NOT NULL
+    id SERIAL PRIMARY KEY, -- id for each method
+    method_name VARCHAR(50) NOT NULL, -- name of the method ("standard", "express", etc.)
+    region VARCHAR(100) NOT NULL -- region the method is available in
+);
+
+CREATE TABLE tracker.Shipment_vendors (
+    id SERIAL PRIMARY KEY, -- id for each vendor
+    vendor_name VARCHAR(50) NOT NULL, -- name of the vendor
+    shipping_type VARCHAR(50), -- type of shipping the vendor provides ("air", "ground", etc.)
+    region VARCHAR(100), -- region the vendor is available in
+    rate DECIMAl(10,2), -- rate for the vendor
+    rank VARCHAR(50) -- rank of the vendor (Poor, OK, Preffered)
 );
 
 -- linking orders to a shipping method
@@ -182,17 +191,6 @@ CREATE TABLE tracker.ticket (
     date_resolved date,
     resolution character varying
 );
-
-
---CREATE TABLE tracker.shipments(
---    id integer NOT NULL,
---    num_boxes integer,
---    shipment_date date,
---    expected_delivery_date date,
---    actual_delivery_date date,
---    full_or_partial boolean -- True for full order, False for partial
---);
-
 
 --
 -- TOC entry 4654 (class 2604 OID 25071)
@@ -263,9 +261,7 @@ COPY tracker.ticket (id, source, type, description, status, report_date, date_de
 2	bk	shipping	product lost while shipping order	closed	2024-09-15	2024-09-15	2024-09-15	shipping replaced lost items
 \.
 
---COPY tracker.shipments (id, num_boxes, shipment_date, expected_delivery_date, actual_delivery_date, full_or_partial) FROM stdin;
---0	5	2024-09-15	2024-09-30	2024-09-30	TRUE \N \N
---
+
 -- TOC entry 4828 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: Inventory_id_seq; Type: SEQUENCE SET; Schema: tracker; Owner: postgres
@@ -317,10 +313,6 @@ ALTER TABLE ONLY tracker.Order
 
 ALTER TABLE ONLY tracker.ticket
     ADD CONSTRAINT ticket_pkey PRIMARY KEY (id);
-
---ALTER TABLE ONLY tracker.shipments
---    ADD CONSTRAINT shipments_pkey PRIMARY KEY (id);
-
 
 
 --give admin access to tables
