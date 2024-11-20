@@ -1,0 +1,211 @@
+<!-- ICE TRACK SHIPMENT TRACKING PAGE: ALLOWS YOU TO LOOK UP AND FIND SHIPMENTS -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ice Track Shipment Tracking</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/icetrackstyles.css') }}"/>
+   
+</head>
+<body>
+    <script src="{{ url_for('static',filename='script/icetrackJS.js') }}"></script>
+
+    <div class="identifier">
+        <a href="icetracklogin.html">Login</a> 
+        <a href="icetracksignup.html">Sign Up</a> 
+    </div>
+
+    <div class="header">
+      <h1>Track Your Shipment</h1>
+    </div>
+
+    <div class="topnav">
+        <a href="icetrackhome.html">Home</a> 
+        <a href="icetrackorder.html">Order Entry</a>
+        <a href="icetrackinventory.html">Inventory Management</a>
+        <a href="icetrackshipment.html">Shipment Tracking</a>
+        <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+        <a href="icetrackFAQ.html">FAQ</a>
+    </div>
+
+    <p id="rcorners1" class = "myLabel"> Enter identifiable information so that we may retrieve your shipment information.</p>
+
+    
+<!-- Input Formatting (Form Creation) -->
+    <form action="/icetrackshipmentsubmitted" id = "shipmentForm" method="POST" name="data">
+      <h2 class = "header2"><u>Find Your Shipment</u></h2>
+        <!-- The Customer's Name -->
+        <div class="input_group2" id = "rcorners5">
+            <label for="" class = "myLabel">Order Name</label>
+            <input type="text" required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
+            <button class="help_button" id="help-orderName">?</button>   
+            <div id="myModal-orderName" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-orderName">&times;</span>
+                    <p>This name should match the one associated with the order, typically the customer's name as entered.</p>
+                </div>
+            </div>
+          </div>
+
+        <!-- Shipping Address -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Shipping Address</label>
+            <input type="text" id="rcorners4" name="ShippingAddress">
+            <button class="help_button" id="help-shippingAddress">?</button>   
+            <div id="myModal-shippingAddress" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-shippingAddress">&times;</span>
+                    <p>This is where the ice cream was directed to be sent</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipment Date -->
+       <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Shipment Date</label>
+            <input type="date" id="rcorners4" name="ShipmentDate">
+            <button class="help_button" id="help-shipmentDate">?</button>   
+            <div id="myModal-shipmentDate" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-shipmentDate">&times;</span>
+                    <p>Select the date of shipment according to your receipts, if not shipped, your order may not appear</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expected Delivery Date -->
+        <div class="input_group2" id="rcorners5">
+            <label for="" class = "myLabel">Expected Delivery Date</label>
+            <input type="date" id="rcorners4" name="expectedDate">
+            <button class="help_button" id="help-deliveryDate">?</button>   
+            <div id="myModal-deliveryDate" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-deliveryDate">&times;</span>
+                    <p>Select the date the package was (or is) expected to be delivery regardless of accuracy.</p>
+                </div>
+            </div>
+        </div>
+        <!-- The button for searching when the user is done filling out identifiable information -->
+        <input type="submit" class="submit_button" value = "Track">
+
+    </form>
+    <script src="{{ url_for('static',filename='script/helpButtonShip.js') }}"></script>
+    <hr>
+
+    <script>
+        // Function to capture and JSONify form data on submission
+        document.getElementById('shipmentForm').addEventListener('submit', function(event) {
+          event.preventDefault();  // Prevent default form submission
+  
+          // Capture form data
+          const formData = new FormData(this);
+          const jsonObject = {};
+  
+          // Convert FormData to a JSON object
+          formData.forEach((value, key) => {
+            // Handle multiple select inputs properly
+            if (jsonObject[key]) {
+              if (Array.isArray(jsonObject[key])) {
+                jsonObject[key].push(value);
+              } else {
+                jsonObject[key] = [jsonObject[key], value];
+              }
+            } else {
+              jsonObject[key] = value;
+            }
+          });
+  
+          // Convert JSON object to a string
+          const jsonString = JSON.stringify(jsonObject, null, 2);
+
+          // Writes JSON String to shipmentData.json
+            // Create a Blob with JSON data and initiate a download 
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'shipmentData.json';  // Name of the file
+            link.click();  // Programmatically trigger the download
+  
+          // Log the JSON string to the console (temporarily)
+          console.log(jsonString);
+  
+          // Store JSON data in localStorage
+          localStorage.setItem('shipmentForm',jsonString);
+  
+          // Redirects to the order submitted page
+          window.location.href = 'icetrackshipment.html';
+  
+          // Send the JSON data to the PHP script
+        fetch('save_shipment.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonString
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
+        });
+      </script>
+
+<!-- Returned Information from Search -->
+<div id="shipmentSummary"></div>
+<div id="shipmentFound"></div>
+
+<script>
+  // Retrieve JSON data from localStorage
+  const jsonString = localStorage.getItem('shipmentForm');
+
+  // Parse the JSON string back to an object
+  const orderData = JSON.parse(jsonString);
+
+  // Get the div to display the order summary
+  const shipmentSummaryDiv = document.getElementById('shipmentSummary');
+  const shipmentSummaryFoundDiv = document.getElementById('shipmentFound');
+
+  // The shipmentForm data echoes what was entered from "Find Your Shipment"
+  if (shipmentForm) {
+    const orderHTML = `
+     <h2 class = "header">Matching Shipment Information</h2>
+     
+      <p><strong><h4 class = "myLabel">Name</h4></strong> ${orderData.CustomerName}</p>
+      <p><strong><h4 class = "myLabel">Shipping Address</h4></strong> ${orderData.ShippingAddress}</p>
+      <p><strong><h4 class = "myLabel">Shipment Date</h4></strong> ${orderData.ShipmentDate}</p>
+      <p><strong><h4 class = "myLabel">Expected Delivery Date</h4></strong> ${orderData.expectedDate}</p>
+    ` ;
+    shipmentSummaryDiv.innerHTML = orderHTML;
+  } else {
+    shipmentSummaryDiv.innerHTML = '<p>No shipment data entered.</p>';
+   }
+
+//    The returned data from the database would be "shipmentFoundForm"
+   if (shipmentFoundForm) {
+    const shipmentHTML = `
+    <h2 class = "header2"><u>Shipment Tracking Information</u></h2>
+      <p><strong><h4 class = "myLabel">Shipment ID</h4></strong> ${orderData.ShipmentID}</p>
+      <p><strong><h4 class = "myLabel">Number of Shipment Boxes</h4></strong> ${orderData.NumBoxes}</p>
+      <p><strong><h4 class = "myLabel">Full/Partial Order</h4></strong> ${orderData.Full} ${orderData.Partial}</p>
+      <p><strong><h4 class = "myLabel">Expected Delivery Date</h4></strong> ${orderData.expectedDate}</p>
+      <p><strong><h4 class = "myLabel">Delivery Date</h4></strong> ${orderData.deliveryDate}</p>
+      <p><strong><h4 class = "myLabel">Method Of Delivery</h4></strong> ${orderData.deliveryMethod}</p>
+      <p><strong><h4 class = "myLabel">Notes</h4></strong> ${orderData.notes}</p>
+    `;
+    shipmentSummaryFoundDiv.innerHTML = shipmentHTML;
+  } else {
+    shipmentSummaryFoundDiv.innerHTML = '<p>No shipment data found.</p>';
+  }
+</script>
+    
+   <hr>
+</body>
+</html>
