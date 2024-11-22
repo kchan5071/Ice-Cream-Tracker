@@ -1,0 +1,274 @@
+/* Style Sheet, In control of the appearance of the ICE TRACK site */
+* {
+    box-sizing: border-box;
+    /* font-family: 'Montserrat'; */
+  }
+
+/* <uniquifier>: Use a unique and descriptive class name*/
+.montserrat-eb {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+  
+  body {
+    margin: 0;
+    background-color: rgb(241, 230, 205);
+    align-content: center;
+  }
+  
+  .identifier {
+    overflow: hidden;
+    background-color: #4f4438;
+    font-family: 'Montserrat';
+  }
+  
+  /* Style the identifier buttons */
+  .identifier a {
+    float: left;
+    display: block;
+    color: #f2f2f2; /* Nav Text Color */
+    text-align: center;
+    padding: 5px 16px;
+    text-decoration: none;
+  }
+  
+  /* updating identifier buttons on hover */
+  .identifier a:hover {
+    background-color: rgb(212, 187, 162);/* Nav Color on hover */
+    color: black; /* Nav Text Color on hover*/
+  } 
+  
+  .myLabel {
+    /* font-family: Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif;  */
+    font-family: "Montserrat";
+    font-optical-sizing: auto;
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  /* Style the header */
+  .header {
+    background-color: #fafafa;
+    color: #61350a; /* Header Text Color: brown*/
+    /* font-family: Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif;  */
+    font-family: "Montserrat";
+    font-optical-sizing: auto;
+    
+    font-size: 30px;
+    padding: 5px;
+    text-align: center;
+    font-weight: bolder;
+  }
+  .header2 {
+    color: #61350a; /* Header Text Color: brown*/
+    /* font-family: Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif;  */
+    font-family: "Montserrat";
+    font-optical-sizing: auto;
+    font-size: 30px;
+    padding: 5px;
+    font-weight: bold;
+    text-underline-offset: 15px;
+  }
+  
+  /* Style the top navigation bar */
+  .topnav {
+    overflow: hidden;
+    background-color: #4f4438; /* Nav Bar Color */
+  }
+  
+  /* Style the topnav links */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2; /* Nav Color */
+    /* font-family: Helvetica, Sans-Serif; */
+    font-family: 'Montserrat';
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change color on hover */
+  .topnav a:hover {
+    background-color: rgb(212, 187, 162);/* Nav Color on hover */
+    color: black; /* Nav Text Color on hover*/
+  }
+  
+  #rcorners1 {
+    /*responsible for text boxes encasing login (user and pass) */
+    border-radius: 25px;
+    background: rgba(255,255,255,0.8);
+    padding: 10px;
+    margin: 10px;
+    text-align: left;
+  }
+  
+  #rcorners2 {
+  /* responsible for surrounding boxes */
+    border-radius: 25px;
+    background: rgb(212, 187, 162);
+    padding: 5px;
+    margin: 10 50;
+    align-content: center;
+    text-align: center;
+  }
+  #rcorners3 {
+    /*shaping*/
+    border-radius: 25px;
+    padding: 10px 50px;
+    margin: 10 10;
+    align-content: center;
+    text-align: center;
+  }
+  #rcorners4 {
+    /* Responsible for the from input sections */
+    border-radius: 5px;
+    border-width: 2px;
+    background: white;
+    /* padding: 20px; */
+    margin: 5;
+    text-align: left;
+  }
+
+  #amount {
+    border-radius: 5px;
+    border-width: 2px;
+    background: white;
+    /* padding: 20px; */
+    margin: 5;
+    text-align: left;
+  }
+
+  #rcorners4long {
+    border-radius: 5px;
+    background: white;
+    width: 300px;
+    margin: 5;
+    text-align: left;
+  }
+  #rcorners5 {
+    /* Responsible for the alignment of each subdivision on forms*/
+    border-radius: 5px;
+    /* background: rgba(253, 158, 202, 0.5); */
+    padding: 10px;
+    margin: 50 50;
+    align-content: left;
+    text-align: left;
+  }
+
+  .horizonLine{
+    color: #61350a;
+  }
+
+  .loginbox {
+    overflow:auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    padding: 50px;
+    margin: 10 100;
+    align-content: center;
+    text-align: center;
+  }
+
+  .button {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+  }
+  
+  .button:hover {
+    background-color: #555555;
+    color: white;
+  }
+
+  .help_button {
+    background-color: white;
+    color: black;
+    border: 2px;
+    border-radius: 50%;
+  }
+  .help_button:hover {
+    background-color: #555555;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .submit_button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #aedee7;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+  
+  .submit_button:hover {background-color: #e2a2c5}
+  
+  .submit_button:active {
+    background-color: #dd79b0;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  .input_group {
+    /* align-content: left; */
+  }
+  .input_group2 {
+    align-content: left;
+  }
+  
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+
+}
+  
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 10px;
+  border: 1px solid #888;
+  border-radius: 15%;
+  border-width: 2px;
+  width: 80%;
+  color: #61350a; /* Header Text Color: brown*/
+    /* font-family: Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif;  */
+    font-family: "Montserrat";
+    font-optical-sizing: auto;
+    font-size: 20px;
+    padding: 5px;
+    font-weight: normal;
+    text-underline-offset: 15px;
+}
+  
+.close {
+  color: #aaa;    
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+  
+.close:hover,
+  
+.close:focus {
+  color: black;    
+  text-decoration: none;
+  cursor: pointer;
+}

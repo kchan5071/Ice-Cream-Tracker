@@ -1,0 +1,163 @@
+<!-- ICE TRACK INVENTORY MANAGEMENT PAGE: ALLOWS COMPANY TO KEEP TRACK OF CURRENT STOCK -->
+ <!-- only available to employees -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Ice Track Inventory Management</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/icetrackstyles.css') }}"/>
+</head>
+<body>
+
+  <div class="identifier">
+        <a href="icetracklogin.html">Login</a> 
+        <a href="icetracksignup.html">Sign Up</a> 
+  </div>
+
+<div class="header">
+  <h1>Inventory Management</h1>
+</div>
+
+<div class="topnav">
+  <a href="icetrackhome.html"">Home</a> 
+  <a href="icetrackorder.html">Order Entry</a>
+  <a href="icetrackinventory.html">Inventory Management</a>
+  <a href="icetrackshipment.html">Shipment Tracking</a>
+  <a href="icetrackticketmgmt.html">Trouble Tickets</a>
+  <a href="icetrackFAQ.html">FAQ</a>
+</div>
+<p id = "rcorners1" class = "myLabel"> This page allows you to make changes to the company inventory database</i></p>
+  
+ <!-- The Inventory header featuring the sort by option which is not yet functional because there is no table -->
+<div>
+  <h1 class = "header">Current Inventory</h1>
+  <p><h3 class = "myLabel">
+    {% if inventory is none %}
+        <p>The inventory is empty</p>
+    {% else %}
+        <ul>
+            {% for item in inventory %}
+                <li>ID: {{ item['id'] }}, Flavor: {{ item['flavor'] }}, Size: {{ item['size'] }},
+                    Available: {{ item['available'] }}, Committed: {{ item['committed'] }},
+                    Defective: {{ item['defective'] }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+
+
+  </h3></p>
+</div>
+
+
+  <div> 
+
+    <!-- <form action="/summaryInv" method = "post" class = "myLabel">
+      <div class="input_group2" id="rcorners5">
+        <h2 class = "header2">
+          <u>Change Summary 
+        <label for="" class = "myLabel"><b>Select:</b></label> -->
+        <!-- lets you choose what time frame of data you want to see -->
+        <!-- <select id="rcorners4" name="timeFrame" multiple required>
+            <option value="sortID">past week</option>
+            <option value="sortFlavor">past month</option>
+            <option value="sortSize">past year</option>
+            <option value="sortCost" selected>all time</option>
+        </select>
+        <button class="help_button" id="help-timeFrame">?</button>   
+        <div id="myModal-timeFrame" class="modal">
+            <div class="modal-content">
+                <span class="close" data-modal="myModal-timeFrame">&times;</span>
+                <p>This dropdown menu allows you to generate a new summary report showing the disposition of inventory for specified time periods (weekly, monthly, yearly).</p>
+            </div>
+        </div></u>
+        </h2>
+      </div> -->
+      <!-- generate summary button -->
+      <!-- <input type = "submit" value = "generate summary" class = "submit_button">
+    </form>   -->
+
+    <h1 class = "header">Update</h1>
+    <p id = "rcorners1" class = "myLabel"> Enter the ID of an object to update the database. </i></p>
+ 
+
+    <!-- # to commit -->
+    <form action="/commitInv" method = "post" class = "myLabel">
+      <!-- input value -->
+       <input type="number" class="input_group2" id="rcorners5" name="commitNum">
+      <!-- commit button -->
+       <input type="submit" class="submit_button" value="commit" name="commitNum">
+      <!-- help -->
+       <button type="button" class="help_button" id="help-commit">?</button>  
+       <div id="myModal-commit" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="myModal-commit">&times;</span>
+            <p> Provide the ID of an item you would like to commit. This will commit one of the available items in the inventory. </p>
+        </div>
+       </div> 
+    </form>
+   
+
+   <!-- # to delete -->
+    <form action="/defectiveInv" method = "post" class = "myLabel">
+    <!-- input value -->
+     <input type="number" class="input_group2" id="rcorners5" name="defectiveNum">
+    <!-- delete button -->
+     <input type="submit" class="submit_button" value="defective" > 
+    <!-- help -->
+     <button type="button" class="help_button" id="help-defective">?</button>  
+     <div id="myModal-defective" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="myModal-defective">&times;</span>
+          <p> Provide the ID of an item you would like to mark defective. This will mark one of the available items in the inventory as defective.</p>
+      </div>
+     </div>
+  </form>
+
+
+  <!-- # to add -->
+  <form action="/addInv" method = "post" class = "myLabel">
+    <!-- input value -->
+     <input type="number" class="input_group2" id="rcorners5" name="addNum">
+    <!-- add button -->
+     <input type="submit" class="submit_button" value="add" > 
+    <!-- help -->
+     <button type="button" class="help_button" id="help-add">?</button>
+     <div id="myModal-add" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="myModal-add">&times;</span>
+          <p> Provide the ID of an item you would like to add. This will add one item to the number currently available.</p>
+      </div>
+     </div>
+   </form>
+
+
+    <!-- # to delete -->
+  <form action="/deleteInv" method = "post" class = "myLabel">
+    <!-- input value -->
+     <input type="number" class="input_group2" id="rcorners5" name="deleteNum">
+    <!-- add button -->
+     <input type="submit" class="submit_button" value="delete" > 
+    <!-- help -->
+     <button type="button" class="help_button" id="help-delete">?</button>
+     <div id="myModal-delete" class="modal">
+      <div class="modal-content">
+          <span class="close" data-modal="myModal-delete">&times;</span>
+          <p> Provide the ID of an item you would like to delete. This will delete one item from the number currently available.</p>
+      </div>
+     </div>
+   </form>
+
+  </div>
+
+
+
+<script src="{{ url_for('static',filename='script/helpButtonInventory.js') }}"></script>
+</body>
+</html>

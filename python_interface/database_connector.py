@@ -236,5 +236,3 @@ class DatabaseWrapper:
                  WHERE {self.get_primary_key(table)[0][0]} = '{primary_key}'"""
         self.cursor.execute(query)
         return value
-
-        
