@@ -82,8 +82,9 @@
             </div>
         </div>
 
-      <h2 class = "header2"><u>Costs</u></h2> <!-- numeric inputs for numeric values -->
-        <div class="input_group" id="rcorners5">
+<!-- numeric inputs for numeric values -->
+      <!-- <h2 class = "header2"><u>Costs</u></h2>  -->
+        <!-- <div class="input_group" id="rcorners5">
             <label for="subtotal" class = "myLabel">Subtotal</label>
             <input type="number" id="amount" name="Subtotal" min="0" step="0.01" required>
         </div>
@@ -94,9 +95,9 @@
         <div class="input_group2" id="rcorners5">
             <label for="totalCost" class = "myLabel">Total Cost</label>
             <input type="number" id="amount" name="TotalCost" min="0" step="0.01" required>
-        </div>
-
-      <h2 class = "header2"><u>Time Records</u></h2> <!-- date-type input values -->
+        </div> -->
+        <!-- date-type input values -->
+      <!-- <h2 class = "header2"><u>Time Records</u></h2> 
         <div class="input_group2" id="rcorners5">
             <label for="orderDate" class = "myLabel">Order Date</label>
             <input type="date" required id="rcorners4" name="OrderDate">
@@ -107,9 +108,9 @@
                     <p>Select the date of order placement.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="input_group2" id="rcorners5">
+        <!-- <div class="input_group2" id="rcorners5">
             <label for="paymentDate" class = "myLabel">Payment Date</label>
             <input type="date" required id="rcorners4" name="PaymentDate">
             <button class="help_button" id="help-paymentDate">?</button>   
@@ -119,7 +120,7 @@
                     <p>Select the date payment was made.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <!-- Customer Status -->
@@ -179,7 +180,7 @@
         const blob = new Blob([jsonString], { type: 'application/json' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'orderData.json';  // Name of the file
+        // link.download = 'orderData.json';  // Name of the file
         link.click();  // Programmatically trigger the download
 
         // Log the JSON string to the console (temporarily)
