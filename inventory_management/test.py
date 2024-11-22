@@ -16,19 +16,19 @@ def test_inventory_management():
     # Now create an instance of InventoryManagement
     inventory_manager = InventoryManagement(db)
 
-    inventory_manager.remove_product(5)
+    for i in range(99):
+        inventory_manager.increment_available(1)
 
+    #inventory_manager.update_defective(1)
     inventory_status = inventory_manager.get_inventory_status()
 
     if inventory_status:
         print("Inventory Status:")
         for item in inventory_status:
-            print(f"Flavor: {item['flavor']}, Size: {item['size']}, Available: {item['available']}, Committed: {item['committed']}")
+            print(f"ID: {item['id']}, Flavor: {item['flavor']}, Size: {item['size']}, Available: {item['available']}, Committed: {item['committed']}, Defective: {item['defective']}")
     else:
         print("No inventory data found or error fetching inventory.")
-
-
-
+    # inventory_manager.add_product(2, 'Nut', 'L', 4.99, 50, 0, 0)
 
     db.close()
 
