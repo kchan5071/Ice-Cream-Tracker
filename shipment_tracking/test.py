@@ -46,7 +46,7 @@ def main():
     db.get_shipment_method_info(1)
     
     
-    
+    db.query_shipments('Company 1')
     
     #clear table for next run
     db.clear_table('order')

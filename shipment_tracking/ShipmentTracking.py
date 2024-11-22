@@ -121,15 +121,13 @@ class ShipmentSystem:
             query += " AND order_date = %s"
             params.append(order_date)
         if estimated_arrival is not None:
-            query += " \"AND estimated_arrival\" = %s"
+            query += " AND estimated_arrival = %s"
             params.append(estimated_arrival)
             
         self.db.cursor.execute(query, params)
         rows = self.db.cursor.fetchall()
         if rows:
-            print("Matching Orders:")
-            for row in rows:
-                print(row)
+            return rows
         else:
             print("No matching orders found.")
     
