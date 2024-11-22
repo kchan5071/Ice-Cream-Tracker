@@ -23,6 +23,10 @@ def startup():
     inventoryMGMT = InventoryManagement(db_conn)
     global shipmentMGMT
     shipmentMGMT = ShipmentSystem(user, password, host, port, database, schema)
+    global ticketID
+    ticketID = 10
+    pass
+    
 # app routing, site page to site page
 
 # starting call
@@ -45,33 +49,6 @@ def order():
 
 @app.route('/icetrackordersubmitted', methods=['POST', 'GET'])
 def submittedorder():
-    if request.method == 'POST':
-        # Extract form data
-        name = request.form.get('name', '').strip()
-        shippingAddress = request.form.get('shippingAddress', '')
-        billingAddress = request.form.get('billingAddress', '')
-        orderDescription = request.form.get('orderDescription', '')
-        customerStatus = request.form.get('customerStatus', '').strip()
-
-        try:
-            # Place the order
-            success = place_order(db_conn, name, shippingAddress, billingAddress, orderDescription, "standard", customerStatus)
-
-            # Render success or failure template based on result
-            if success:
-                return render_template('icetrackordersubmitted.html', status="success")
-            else:
-                return render_template('icetrackordersubmitted.html', status="failure")
-
-        except Exception as e:
-            print(f"Error placing order: {e}")  # Log the error for debugging
-            return render_template('icetrackordersubmitted.html', status="error", error_message=str(e))
-
-    # Handle GET request (optional)
-    return render_template('icetrackordersubmitted.html', status="invalid")
-
-@app.route('/icetrackordersubmitted.html', methods=['POST', 'GET'])
-def ordersubmitted():
     if request.method == 'POST':
         # Extract form data
         name = request.form.get('name', '').strip()
@@ -179,13 +156,9 @@ def trackShipment():
         return render_template('icetrackshipment.html', foundStatus=None, error="An unexpected error occurred. Please try again.")
 
 
-@app.route('/icetrackticketmgmt.html', methods=['POST', 'GET'])
+@app.route('/icetrackticketmgmt.html')
 def ticketentry():
     return render_template('icetrackticketmgmt.html')
-
-@app.route('/icetrackticketsubmitted.html', methods=['POST', 'GET'])
-def submittedticket():
-    return render_template('icetrackticketsubmitted.html')
 
 @app.route('/icetrackticketsubmitted', methods=['POST', 'GET'])
 def ticketsubmitted():
@@ -198,22 +171,17 @@ def ticketsubmitted():
         description = request.form.get('problemDescription', '')
 
         date_detected = format_date(date_detected) if date_detected else None
-
         try:
             # create the ticket
-            success = create_ticket(db_conn, None, name, date_detected, problem_type, description, status = 'open', resolution=None)
-
-            # Render success or failure template based on result
-            if success:
-                return render_template('icetrackticketsubmitted.html', status="success")
-            else:
-                return render_template('icetrackticketsubmitted.html', status="failure")
-
+            global ticketID
+            success = create_ticket(db_conn, ticketID, name, date_detected, problem_type, description, status = 'open', resolution=None)
+            ticketID = ticketID + 1
+            return render_template('icetrackticketsubmitted.html', state = success)
         except Exception as e:
             print(f"Error placing order: {e}")  # Log the error for debugging
-            return render_template('icetrackticketsubmitted.html', status="error", error_message=str(e))
+            return render_template('icetrackticketsubmitted.html', state="error", error_message=str(e))
 
-    return render_template('icetrackticketsubmitted.html', status = "invalid")
+    return render_template('icetrackticketsubmitted.html', state = "invalid")
     
 
 @app.route('/icetracklogin.html',methods=['POST','GET'])

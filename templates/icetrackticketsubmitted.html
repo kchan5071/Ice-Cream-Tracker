@@ -41,14 +41,12 @@
 <div id="ticketSummary"></div>
 <div>
   <h2 class = "header2">Submission Status</h2>
-  {% if status == "success" %}
-      <p>Your ticket has been successfully made!</p>
-  {% elif status == "failure" %}
-      <p>Failed to make ticket. Please try again later.</p>
-  {% elif status == "error" %}
+  {% if state == "invalid" %}
+      <p>Your submission this time was invalid. Check your inputs and try again. </p>
+  {% elif state == "error" %}
       <p>An error occurred: {{ error_message }}</p>
   {% else %}
-      {{status}}
+      {{state}}
   {% endif %}
 </div>
 <script>

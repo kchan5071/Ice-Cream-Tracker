@@ -116,64 +116,10 @@
         </div>
 
         <input type="submit" class="submit_button" style = "align-content: center;">
-    </form>
-
-    <script>
-      // Function to capture and JSONify form data on submission
-      document.getElementById('troubleTicketData').addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent default form submission
-
-        // Capture form data
-        const formData = new FormData(this);
-        const jsonObject = {};
-
-        // Convert FormData to a JSON object
-        formData.forEach((value, key) => {
-          // Handle multiple select inputs properly
-          if (jsonObject[key]) {
-            if (Array.isArray(jsonObject[key])) {
-              jsonObject[key].push(value);
-            } else {
-              jsonObject[key] = [jsonObject[key], value];
-            }
-          } else {
-            jsonObject[key] = value;
-          }
-        });
-
-        // Convert JSON object to a string
-        const jsonString = JSON.stringify(jsonObject, null, 2);
-
-        // Writes JSON String to ticketData.json
-          // Create a Blob with JSON data and initiate a download 
-          const blob = new Blob([jsonString], { type: 'application/json' });
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = 'ticketData.json';  // Name of the file
-          link.click();  // Programmatically trigger the download
-
-        // Log the JSON string to the console (temporarily)
-        console.log(jsonString);
-
-        // Store JSON data in localStorage
-        localStorage.setItem('troubleTicketData',jsonString);
-
-        // Send the JSON data to the PHP script
-        fetch('save_ticket.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: jsonString
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log('Success:', data);
-            window.location.href = 'icetrackticketsubmitted.html';
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-      });
-    </script>
+        
+      </form>
+      <br>
+    
 
     <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit.</p>
     <script src="{{ url_for('static',filename='script/helpButtonTicket.js') }}"></script>
