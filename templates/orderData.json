@@ -1,0 +1,12 @@
+{
+    "CustomerName": "",
+    "ShippingAddress": "",
+    "BillingAddress": "",
+    "OrderDescription": "",
+    "Subtotal": "0.00",
+    "ShippingCost": "0.00",
+    "TotalCost": "0.00",
+    "OrderDate": "2024-10-22",
+    "PaymentDate": "2024-10-22",
+    "CustomerStatus": "ok"
+  }
