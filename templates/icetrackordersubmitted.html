@@ -40,7 +40,7 @@
 
 <div id="orderSummary"></div>
 
-<body>
+<div>
   <h2 class = "header2">Order Details</h2>
   {% if status == "success" %}
       <p>Your order has been successfully placed!</p>
@@ -51,7 +51,7 @@
   {% else %}
       <p>Invalid order submission.</p>
   {% endif %}
-</body>
+</div>
 
 <script>
   // Retrieve JSON data from localStorage

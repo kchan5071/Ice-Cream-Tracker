@@ -36,10 +36,21 @@
    </div>
  <p id = "rcorners1" class = "myLabel">Here is a record of your most recent submission.</p>
   
-<h2 class = "header">Submission Successful!</h2>
+<!-- <h2 class = "header">Submission Successful!</h2>5r -->
 
 <div id="ticketSummary"></div>
-
+<div>
+  <h2 class = "header2">Submission Status</h2>
+  {% if status == "success" %}
+      <p>Your ticket has been successfully made!</p>
+  {% elif status == "failure" %}
+      <p>Failed to make ticket. Please try again later.</p>
+  {% elif status == "error" %}
+      <p>An error occurred: {{ error_message }}</p>
+  {% else %}
+      {{status}}
+  {% endif %}
+</div>
 <script>
   // Retrieve JSON data from localStorage
   const jsonString = localStorage.getItem('troubleTicketData');
@@ -62,7 +73,7 @@
     `;
     ticketSummaryDiv.innerHTML = ticketHTML;
   } else {
-    ticketSummaryDiv.innerHTML = '<p>No order data found.</p>';
+    ticketSummaryDiv.innerHTML = '<p>No ticket data found.</p>';
   }
 </script>
 
