@@ -12,18 +12,17 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/icetrackstyles.css') }}"/>
 <title>Ice Track Home</title>
 </head>
-<body>
+<body class = "bodya">
 
   <div class="identifier">
-    <!--if logged in: Who is currently logged in 
-        else: login button 
-        can add: colors signifying the hierarchy of permissions -->
+    <!--TODO: if logged in: [Show who is currently logged in] else: [Show login button] -->
+    <!--TODO: colors signifying the hierarchy of permissions -->
         <a href="icetracklogin.html">Login</a> 
         <a href="icetracksignup.html">Sign Up</a> 
   </div>
 
 <div class="header">
-  <h1>Welcome to ICE TRACK MANAGEMENT</h1>
+  <h1>Welcome to Ice Track</h1>
 </div>
 
 <nav class="topnav fixed-top" >
@@ -34,11 +33,11 @@
   <a href="icetrackticketmgmt.html">Trouble Tickets</a>
   <a href="icetrackFAQ.html">FAQ</a>
 </nav>
-<p id = "rcorners1" class = "myLabel"> ICE TRACK serves as an automated tracking system for <i>Tom and Adam’s Ice Cream Company</i></p>
 
-<p> Login feature currently inactive (please don't abuse our site).</p>
-<!-- Home page: add an introduction to the site, navigation a picture, make pretty etc etc 
- - maybe add a directory?
- - -->
-</body>
+<!-- Notes for those who are just entering the site -->
+<p id = "rcorners1" class = "myLabel"> Ice Track serves as an automated tracking system for <i>Tom and Adam’s Ice Cream Company</i></p>
+<p  id = "rcorners1" class = "myLabel"> Please navigate to our FAQ page for help on how to use Ice Track.</p>
+<p  id = "rcorners1" class = "myLabel"> Login feature currently inactive (please don't abuse our site).</p>
+
+</body class = "bodya">
 </html>

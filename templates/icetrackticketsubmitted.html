@@ -36,9 +36,8 @@
    </div>
  <p id = "rcorners1" class = "myLabel">Here is a record of your most recent submission.</p>
   
-<!-- <h2 class = "header">Submission Successful!</h2>5r -->
 
-<div id="ticketSummary"></div>
+<!-- Confirms or denies submissions status -->
 <div>
   <h2 class = "header2">Submission Status</h2>
   {% if state == "invalid" %}
@@ -46,36 +45,9 @@
   {% elif state == "error" %}
       <p>An error occurred: {{ error_message }}</p>
   {% else %}
-      {{state}}
+      <p>Your ticket with id: {{state}} has been successfully created.</p>
   {% endif %}
 </div>
-<script>
-  // Retrieve JSON data from localStorage
-  const jsonString = localStorage.getItem('troubleTicketData');
-
-  // Parse the JSON string back to an object
-  const troubleTicketData = JSON.parse(jsonString);
-
-  // Get the div to display the order summary
-  const ticketSummaryDiv = document.getElementById('ticketSummary');
-
-  // Display the JSON data
-  if (troubleTicketData) {
-    const ticketHTML = `
-     <h2 class = "header2">Trouble Ticket Summary</h2>
-      <p><strong><h4 class = "myLabel">Today's Date</h4></strong> ${troubleTicketData.todaysDate}</p>
-      <p><strong><h4 class = "myLabel">Name</h4></strong> ${troubleTicketData.sourceName}</p>
-      <p><strong><h4 class = "myLabel">Date Detected</h4></strong> ${troubleTicketData.detectionDate}</p>
-      <p><strong><h4 class = "myLabel">Type of Problem</h4></strong> ${troubleTicketData.problemType}</p>
-      <p><strong><h4 class = "myLabel">Problem Description</h4></strong> ${troubleTicketData.problemDescription}</p>
-    `;
-    ticketSummaryDiv.innerHTML = ticketHTML;
-  } else {
-    ticketSummaryDiv.innerHTML = '<p>No ticket data found.</p>';
-  }
-</script>
-
-
 
  <p id = "rcorners1" class = "myLabel">Thank you for updating our records!</p>
  

@@ -1,5 +1,12 @@
 # Create the trouble ticket 
 def create_ticket(db_connector, source, date_detected, problem_type, description, status, resolution=None):
+    init_query = """
+    SELECT MAX(id) FROM tracker.ticket;
+    SELECT SETVAL('tracker.ticket_id_seq', (SELECT MAX(id) FROM tracker.ticket) + 1);
+    """
+    db_connector.cursor.execute(init_query)
+    db_connector.connection.commit()
+    
     query = """
     INSERT INTO tracker.ticket (source, report_date, date_detected, type, description, status, resolution)
     VALUES (%s, CURRENT_DATE, %s, %s, %s, %s, %s)

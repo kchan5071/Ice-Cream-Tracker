@@ -1,5 +1,4 @@
 <!-- ICE TRACK INVENTORY MANAGEMENT PAGE: ALLOWS COMPANY TO KEEP TRACK OF CURRENT STOCK -->
- <!-- only available to employees -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,7 @@
 </div>
 <p id = "rcorners1" class = "myLabel"> This page allows you to make changes to the company inventory database</i></p>
   
- <!-- The Inventory header featuring the sort by option which is not yet functional because there is no table -->
+ <!-- The Inventory header showing the orders stored in the database -->
 <div>
   <h1 class = "header">Current Inventory</h1>
   <p><h3 class = "myLabel">
@@ -48,16 +47,13 @@
             {% endfor %}
         </ul>
     {% endif %}
-
-
-
-
   </h3></p>
 </div>
 
 
   <div> 
-
+  <!--TODO: give functionality to code below-->
+    <!-- The following will filter the current inventory to only show data from certain time frames -->
     <!-- <form action="/summaryInv" method = "post" class = "myLabel">
       <div class="input_group2" id="rcorners5">
         <h2 class = "header2">
@@ -160,8 +156,6 @@
    </form>
    <br>
   </div>
-
-
 
 <script src="{{ url_for('static',filename='script/helpButtonInventory.js') }}"></script>
 </body>

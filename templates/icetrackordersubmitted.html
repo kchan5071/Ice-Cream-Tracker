@@ -1,5 +1,4 @@
 <!-- ICE TRACK ORDER ENTRY PAGE: ADDS ENTRIES TO THE DATABASE OF ORDERS -->
- <!-- may need to add more pages here for fluidity -->
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -36,12 +35,11 @@
    </div>
  <p id = "rcorners1" class = "myLabel">Here is a record of your most recent submission.</p>
   
-<h2 class = "header">Submission Successful!</h2>
+<h2 class = "header">Order Submission</h2>
 
-<div id="orderSummary"></div>
-
+<!-- shows submission status (success or failure) -->
 <div>
-  <h2 class = "header2">Order Details</h2>
+  <h2 class = "header2">Submission Status </h2>
   {% if status == "success" %}
       <p>Your order has been successfully placed!</p>
   {% elif status == "failure" %}
@@ -52,33 +50,6 @@
       <p>Invalid order submission.</p>
   {% endif %}
 </div>
-
-<script>
-  // Retrieve JSON data from localStorage
-  const jsonString = localStorage.getItem('orderData');
-
-  // Parse the JSON string back to an object
-  const orderData = JSON.parse(jsonString);
-
-  // Get the div to display the order summary
-  const orderSummaryDiv = document.getElementById('orderSummary');
-
-  // Display the JSON data
-  if (orderData) {
-    const orderHTML = `
-     <h2 class = "header2">Order Details</h2>
-      <p><strong><h4 class = "myLabel">Name</h4></strong> ${orderData.CustomerName}</p>
-      <p><strong><h4 class = "myLabel">Shipping Address</h4></strong> ${orderData.ShippingAddress}</p>
-      <p><strong><h4 class = "myLabel">Billing Address</h4></strong> ${orderData.BillingAddress}</p>
-      <p><strong><h4 class = "myLabel">Order Description</h4></strong> ${orderData.OrderDescription}</p>
-      <p><strong><h4 class = "myLabel">Customer Status</h4></strong> ${orderData.CustomerStatus}</p>
-    `;
-    orderSummaryDiv.innerHTML = orderHTML;
-  } else {
-    orderSummaryDiv.innerHTML = '<p>No order data found.</p>';
-  }
-</script>
-
 
 
  <p id = "rcorners1" class = "myLabel">Thank you for updating our records!</p>

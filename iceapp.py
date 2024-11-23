@@ -9,6 +9,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+ticketID = 1 # global var to hold ticker id #'s
+
 def startup():
     user = 'admin'
     password = 'password'
@@ -23,8 +25,7 @@ def startup():
     inventoryMGMT = InventoryManagement(db_conn)
     global shipmentMGMT
     shipmentMGMT = ShipmentSystem(user, password, host, port, database, schema)
-    global ticketID
-    ticketID = 10
+   
     pass
     
 # app routing, site page to site page
@@ -172,11 +173,9 @@ def ticketsubmitted():
 
         date_detected = format_date(date_detected) if date_detected else None
         try:
-            # create the ticket
-            global ticketID
-            success = create_ticket(db_conn, ticketID, name, date_detected, problem_type, description, status = 'open', resolution=None)
-            ticketID = ticketID + 1
+            success = create_ticket(db_conn, name, date_detected, problem_type, description, status = 'open', resolution=None)    
             return render_template('icetrackticketsubmitted.html', state = success)
+            
         except Exception as e:
             print(f"Error placing order: {e}")  # Log the error for debugging
             return render_template('icetrackticketsubmitted.html', state="error", error_message=str(e))

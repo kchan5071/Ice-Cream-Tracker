@@ -4,6 +4,16 @@
     /* font-family: 'Montserrat'; */
   }
 
+  .bodya {
+    background-image: url('https://cdn.dribbble.com/users/627633/screenshots/1987273/dribbble-car-all-2.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    background-color: rgb(241, 230, 205);
+    align-content: center;
+  }
+
 /* <uniquifier>: Use a unique and descriptive class name*/
 .montserrat-eb {
   font-family: "Montserrat", sans-serif;
