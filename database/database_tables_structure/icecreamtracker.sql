@@ -181,7 +181,7 @@ ADD COLUMN shipment_method_id INTEGER REFERENCES tracker.ShipmentMethods(id);
 --
 
 CREATE TABLE tracker.ticket (
-    id integer NOT NULL,
+    id SERIAL PRIMARY KEY,
     source character varying,
     type character varying,
     description character varying,

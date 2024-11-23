@@ -24,16 +24,14 @@ def main():
 
     # TEST CASES
 
-    current_id = 10
     # Create a new trouble ticket
-    create_ticket(
+    ticket = create_ticket(
         db_connector,                 
-        id = current_id,
         source='Customer A',           
         date_detected='2024-09-28',    
         problem_type='shipping',       
         description='Package not received',  
-        status='open'                  #
+        status='open'                  
     )
 
     # View all open tickets
@@ -41,7 +39,8 @@ def main():
     view_open_tickets(db_connector)
 
     # Update the status of a ticket 
-    update_ticket_status(db_connector, 1, 'closed', 'Issue resolved')
+    update_ticket_status(db_connector, ticket, 'closed', 'Issue resolved')
+    view_open_tickets(db_connector)
 
     # Search for tickets by customer name 
     print("\nSearch Results for Customer A:")
@@ -56,8 +55,8 @@ def main():
     generate_statistical_report(db_connector)
 
     # Delete a ticket
-    print("\nDeleting ticket with ID 10...")
-    delete_ticket(db_connector, 10)
+    print("\nDeleting ticket")
+    delete_ticket(db_connector, ticket)
 
     # View all open tickets again to confirm deletion
     print("\nOpen Tickets After Deletion:")

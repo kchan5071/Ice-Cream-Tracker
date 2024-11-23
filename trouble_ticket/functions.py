@@ -1,13 +1,16 @@
 # Create the trouble ticket 
-def create_ticket(db_connector, id, source, date_detected, problem_type, description, status, resolution=None):
+def create_ticket(db_connector, source, date_detected, problem_type, description, status, resolution=None):
     query = """
-    INSERT INTO tracker.ticket (id, source, report_date, date_detected, type, description, status, resolution)
-    VALUES (%s, %s, CURRENT_DATE, %s, %s, %s, %s, %s);
+    INSERT INTO tracker.ticket (source, report_date, date_detected, type, description, status, resolution)
+    VALUES (%s, CURRENT_DATE, %s, %s, %s, %s, %s)
+    RETURNING id;
     """
-    db_connector.cursor.execute(query, (id, source, date_detected, problem_type, description, status, resolution))
+    db_connector.cursor.execute(query, (source, date_detected, problem_type, description, status, resolution))
+    new_id = db_connector.cursor.fetchone()[0]  # Fetch the generated ID from the database
     db_connector.connection.commit()
 
-    print(f"Ticket with ID {id} for {source} added successfully!")
+    print(f"Ticket with ID {new_id} for {source} added successfully!")
+    return new_id
 
 # View all open tickets
 def view_open_tickets(db_connector):
