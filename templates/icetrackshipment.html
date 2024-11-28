@@ -102,7 +102,15 @@
         </div>
     {% elif foundStatus %}
         <h1 class="header">Found Match:</h1>
-        <p>{{ foundStatus }}</p>
+        <ul class="myLabel">
+        <li><b>ID:</b> {{ foundStatus['Order ID'] }}</li>
+        <li><b>Shipment Date:</b> {{ foundStatus['Date Shipped'] }}</li>
+        <li><b>Shipment Boxes:</b> {{ foundStatus['Shipment Boxes'] }}</li>
+        <li><b>Full/Partial Shipment:</b> {{ foundStatus['Full/Partial Shipment'] }}</li>
+        <li><b>Estimated Arrival:</b> {{ foundStatus['Estimated Arrival'] }}</li>
+        <li><b>Arrival Date:</b> {{ foundStatus['Arrrival Date'] }}</li>
+        <li><b>Status:</b> {{ foundStatus['Status'] }}</li>
+        </ul>
     {% else %}
         <p>No shipment status available.</p>
     {% endif %}
