@@ -14,29 +14,28 @@
 </head>
 <body>
     <div class="identifier">
-        <!--Takes user back to the home page if misclick-->
-            <a href="icetrackhome.html">Home</a> 
+        <a>Not logged in</a>
     </div>
     <div class="header">
         <h1>Login</h1>
     </div>
 
     <!-- A warning for the user to delete after implementation -->
-    <p  id = "rcorners1" class = "myLabel"> Login feature currently inactive.</p>
+    <p  id = "rcorners1" class = "myLabel"> Login to access Ice Track.</p>
 
     <!-- TODO: Turn this into a form readable by flask -->
-    <div class="loginbox">
-        <h3>Enter your username and password:</h3>
-        <div class="input_group" id = "rcorners2">
-            <input type="text"required id="rcorners1">
-            <label for="">Username</label>
-            <input type="password"required id="rcorners1">
-            <label for="">Password</label>
-          
+     <form action="/login" method="POST">
+        <div class="loginbox">
+            <h3>Enter your username and password:</h3>
+            <div class="input_group" id = "rcorners2">
+                <input type="text"required id="rcorners1" placeholder="username" name="username">
+                <label for="">Username</label>
+                <input type="password"required id="rcorners1" placeholder="password" name="password">
+                <label for="">Password</label>
+            
+            </div>
+            <input type="submit" value="Log in" class="button" id="rcorners3">
         </div>
-        <a href="#"><button class="button" id = "rcorners3"> <b>Login</b></button></a>
-        <a href="icetracksignup.html"><button class="button" id = "rcorners3"> <b>Sign Up</b></button></a>
-    </div>
-    
+    </form>
 </body>
 </html>
