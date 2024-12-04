@@ -22,12 +22,12 @@ document.getElementById("help-billing").onclick = function() {
 document.getElementById("help-description").onclick = function() {
     showModal("myModal-description");
 };
-document.getElementById("help-orderDate").onclick = function() {
-    showModal("myModal-orderDate");
-};
-document.getElementById("help-paymentDate").onclick = function() {
-    showModal("myModal-paymentDate");
-};
+//document.getElementById("help-orderDate").onclick = function() {
+//    showModal("myModal-orderDate");
+//};
+//document.getElementById("help-paymentDate").onclick = function() {
+//    showModal("myModal-paymentDate");
+//};
 document.getElementById("help-customerStatus").onclick = function() {
     showModal("myModal-customerStatus");
 };

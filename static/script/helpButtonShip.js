@@ -19,9 +19,6 @@ document.getElementById("help-orderName").onclick = function() {
 document.getElementById("help-shipmentDate").onclick = function() {
     showModal("myModal-shipmentDate");
 };
-document.getElementById("help-shippingAddress").onclick = function() {
-    showModal("myModal-shippingAddress");
-};
 document.getElementById("help-deliveryDate").onclick = function() {
     showModal("myModal-deliveryDate");
 };

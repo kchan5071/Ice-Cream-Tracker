@@ -221,6 +221,7 @@ kfc	chicken	ok
 COPY tracker.Employee (name, password, admin) FROM stdin;
 steve	craft	FALSE
 matthew	password	TRUE
+Gio	mypa$$	TRUE
 \.
 
 
