@@ -1,11 +1,12 @@
-from flask import Flask, render_template, url_for, redirect, request #importing flask functions
+from flask import Flask, render_template, url_for, redirect, request, flash, session, abort #importing flask functions
 from python_interface.database_connector import DatabaseWrapper # the database wrapper to call
 from inventory_management.InventoryManagement import InventoryManagement # Inventory Management functions
 from order_entry.OrderEntry import place_order # Order Entry functions
 from shipment_tracking.ShipmentTracking import ShipmentSystem # Shipment Tracking functions
 from trouble_ticket.functions import create_ticket # imports necessary trouble ticket functionality
 from datetime import datetime
-
+from iceapphelpers import format_date, check_for_user
+import os
 
 app = Flask(__name__)
 
@@ -25,7 +26,6 @@ def startup():
     inventoryMGMT = InventoryManagement(db_conn)
     global shipmentMGMT
     shipmentMGMT = ShipmentSystem(user, password, host, port, database, schema)
-   
     pass
     
 # app routing, site page to site page
@@ -34,19 +34,45 @@ def startup():
 @app.route('/')
 def start():
     startup()
-    return home() # takes you straight to icetrackhome route
+    if not session.get('logged_in'):
+        return render_template('icetracklogin.html')
+    else:
+        return home() # takes you straight to icetrackhome route
+
+
+@app.route('/login',methods=['POST'])
+def do_admin_login():
+    global user_username
+    user_username = request.form['username']
+    global user_password
+    user_password = request.form['password']
+    if check_for_user(db_conn, 'Employee','name', user_username,'password', user_password) != []:
+        session['logged_in'] = True
+    else:
+        flash('wrong password!')
+    return start()
+
+@app.route('/icetracklogin.html',methods=['POST','GET'])
+def login():
+    session['logged_in'] = False
+    return render_template('icetracklogin.html')
+
+# there is currently no sign up feature without a db to store users in
+# @app.route('/icetracksignup.html',methods=['POST','GET'])
+# def signup():
+#     return render_template('icetracksignup.html')
 
 @app.route('/icetrackhome.html')
 def home():
-    return render_template('icetrackhome.html')
+    return render_template('icetrackhome.html', user=user_username)
 
 @app.route('/icetrackFAQ.html')
 def FAQ():
-    return render_template('icetrackFAQ.html')
+    return render_template('icetrackFAQ.html', user=user_username)
 
 @app.route('/icetrackorder.html')
 def order():
-    return render_template('icetrackorder.html')
+    return render_template('icetrackorder.html',  user=user_username)
 
 @app.route('/icetrackordersubmitted', methods=['POST', 'GET'])
 def submittedorder():
@@ -64,22 +90,22 @@ def submittedorder():
 
             # Render success or failure template based on result
             if success:
-                return render_template('icetrackordersubmitted.html', status="success")
+                return render_template('icetrackordersubmitted.html', status="success",  user=user_username)
             else:
-                return render_template('icetrackordersubmitted.html', status="failure")
+                return render_template('icetrackordersubmitted.html', status="failure",  user=user_username)
 
         except Exception as e:
             print(f"Error placing order: {e}")  # Log the error for debugging
-            return render_template('icetrackordersubmitted.html', status="error", error_message=str(e))
+            return render_template('icetrackordersubmitted.html', status="error", error_message=str(e),  user=user_username)
 
     # Handle GET request (optional)
-    return render_template('icetrackordersubmitted.html', status="invalid")
+    return render_template('icetrackordersubmitted.html', status="invalid", user=user_username)
 
 
 @app.route('/icetrackinventory.html',methods=['POST','GET'])
 def inventory():
     results = inventoryMGMT.get_inventory_status()
-    return render_template('icetrackinventory.html',inventory=results)
+    return render_template('icetrackinventory.html',inventory=results, user=user_username)
 
 @app.route('/commitInv',methods=['POST','GET'])
 def commitInv():
@@ -107,7 +133,7 @@ def deleteInv():
 
 @app.route('/icetrackshipment.html',methods=['GET'])
 def shipment():
-    return render_template('icetrackshipment.html')
+    return render_template('icetrackshipment.html', user=user_username)
 
 @app.route('/trackShipment', methods=['POST', 'GET'])
 def trackShipment():
@@ -128,7 +154,7 @@ def trackShipment():
             # Validate inputs
             if not name:
                 app.logger.error("Company name is missing.")
-                return render_template('icetrackshipment.html', foundStatus=None, error="Company name is required.")
+                return render_template('icetrackshipment.html', foundStatus=None, error="Company name is required.", user=user_username)
 
             # Query shipment status
             if shipmentMGMT:
@@ -140,26 +166,26 @@ def trackShipment():
                     return render_template('icetrackshipment.html', foundStatus=shipmentShow)
                 else:
                     app.logger.info("No shipment found for given criteria.")
-                    return render_template('icetrackshipment.html', foundStatus=None, error="No shipments match your search criteria.")
+                    return render_template('icetrackshipment.html', foundStatus=None, error="No shipments match your search criteria.", user=user_username)
             else:
                 app.logger.error("shipmentMGMT is not initialized.")
-                return render_template('icetrackshipment.html', foundStatus=None, error="Shipment management system unavailable.")
+                return render_template('icetrackshipment.html', foundStatus=None, error="Shipment management system unavailable.", user=user_username)
 
         # Handle GET request or return empty form
         return render_template('icetrackshipment.html', foundStatus=None)
 
     except ValueError as ve:
         app.logger.error("ValueError encountered: %s", ve)
-        return render_template('icetrackshipment.html', foundStatus=None, error="Invalid data provided. Please check your inputs.")
+        return render_template('icetrackshipment.html', foundStatus=None, error="Invalid data provided. Please check your inputs.", user=user_username)
 
     except Exception as e:
         app.logger.exception("Unexpected error in trackShipment: %s", e)
-        return render_template('icetrackshipment.html', foundStatus=None, error="An unexpected error occurred. Please try again.")
+        return render_template('icetrackshipment.html', foundStatus=None, error="An unexpected error occurred. Please try again.", user=user_username)
 
 
 @app.route('/icetrackticketmgmt.html')
 def ticketentry():
-    return render_template('icetrackticketmgmt.html')
+    return render_template('icetrackticketmgmt.html', user=user_username)
 
 @app.route('/icetrackticketsubmitted', methods=['POST', 'GET'])
 def ticketsubmitted():
@@ -174,33 +200,18 @@ def ticketsubmitted():
         date_detected = format_date(date_detected) if date_detected else None
         try:
             success = create_ticket(db_conn, name, date_detected, problem_type, description, status = 'open', resolution=None)    
-            return render_template('icetrackticketsubmitted.html', state = success)
+            return render_template('icetrackticketsubmitted.html', state = success, user=user_username)
             
         except Exception as e:
             print(f"Error placing order: {e}")  # Log the error for debugging
-            return render_template('icetrackticketsubmitted.html', state="error", error_message=str(e))
+            return render_template('icetrackticketsubmitted.html', state="error", error_message=str(e), user=user_username)
 
-    return render_template('icetrackticketsubmitted.html', state = "invalid")
+    return render_template('icetrackticketsubmitted.html', state = "invalid", user=user_username)
     
-
-@app.route('/icetracklogin.html',methods=['POST','GET'])
-def login():
-    return render_template('icetracklogin.html')
-
-@app.route('/icetracksignup.html',methods=['POST','GET'])
-def signup():
-    return render_template('icetracksignup.html')
 
 
 if __name__ == '__main__':
+    app.secret_key = os.urandom(12)
     app.run(debug=True)
 
 
-
-# helpers
-def format_date(date_str):
-    try:
-        return datetime.strptime(date_str, "%Y-%m-%d").date()  # Adjust format as needed
-    except ValueError:
-        print("Invalid date format:", date_str)
-        return None

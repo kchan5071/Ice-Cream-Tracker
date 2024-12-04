@@ -15,10 +15,8 @@
 <body class = "bodya">
 
   <div class="identifier">
-    <!--TODO: if logged in: [Show who is currently logged in] else: [Show login button] -->
-    <!--TODO: colors signifying the hierarchy of permissions -->
-        <a href="icetracklogin.html">Login</a> 
-        <a href="icetracksignup.html">Sign Up</a> 
+    <a>{{user}}</a> <!-- show user currently logged in -->
+    <a href="icetracklogin.html">Logout</a> 
   </div>
 
 <div class="header">
@@ -37,7 +35,7 @@
 <!-- Notes for those who are just entering the site -->
 <p id = "rcorners1" class = "myLabel"> Ice Track serves as an automated tracking system for <i>Tom and Adam’s Ice Cream Company</i></p>
 <p  id = "rcorners1" class = "myLabel"> Please navigate to our FAQ page for help on how to use Ice Track.</p>
-<p  id = "rcorners1" class = "myLabel"> Login feature currently inactive (please don't abuse our site).</p>
+<p  id = "rcorners1" class = "myLabel"> Pleasure to have you here, {{user}}.</p>
 
 </body class = "bodya">
 </html>

@@ -181,7 +181,7 @@ ADD COLUMN shipment_method_id INTEGER REFERENCES tracker.ShipmentMethods(id);
 --
 
 CREATE TABLE tracker.ticket (
-    id SERIAL PRIMARY KEY,
+    id integer NOT NULL,
     source character varying,
     type character varying,
     description character varying,
@@ -313,6 +313,9 @@ ALTER TABLE ONLY tracker.Order
 
 ALTER TABLE ONLY tracker.ticket
     ADD CONSTRAINT ticket_pkey PRIMARY KEY (id);
+
+CREATE SEQUENCE tracker.ticket_id_seq START WITH 1 INCREMENT BY 1 OWNED BY tracker.ticket.id;
+ALTER TABLE ONLY tracker.ticket ALTER COLUMN id SET DEFAULT nextval('tracker.ticket_id_seq');
 
 
 --give admin access to tables
