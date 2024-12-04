@@ -7,9 +7,21 @@ from trouble_ticket.functions import create_ticket # imports necessary trouble t
 from datetime import datetime
 
 
+# helpers
+def format_date(date_str):
+    try:
+        return datetime.strptime(date_str, "%Y-%m-%d").date()  # Adjust format as needed
+    except ValueError:
+        print("Invalid date format:", date_str)
+        return None
+
+
 app = Flask(__name__)
 
 ticketID = 1 # global var to hold ticker id #'s
+shipmentMGMT = None
+inventoryMGMT = None
+db_conn = None
 
 def startup():
     user = 'admin'
@@ -18,12 +30,9 @@ def startup():
     port = '5432'
     database = 'icecreamtracker'
     schema = 'tracker'
-    global db_conn
     db_conn = DatabaseWrapper(user, password, host, port, database, schema)
     db_conn.connect()
-    global inventoryMGMT
     inventoryMGMT = InventoryManagement(db_conn)
-    global shipmentMGMT
     shipmentMGMT = ShipmentSystem(user, password, host, port, database, schema)
    
     pass
@@ -194,13 +203,3 @@ def signup():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-# helpers
-def format_date(date_str):
-    try:
-        return datetime.strptime(date_str, "%Y-%m-%d").date()  # Adjust format as needed
-    except ValueError:
-        print("Invalid date format:", date_str)
-        return None
