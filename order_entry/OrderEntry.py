@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from python_interface.database_connector import DatabaseWrapper
+from decimal import Decimal
 
 #get inventory id from flavor and size in order to update the values
 def get_inventory_id(db_connector, flavor, size):
@@ -59,6 +60,32 @@ def get_next_order_id(db_connector):
     query = "SELECT COALESCE(MAX(id), 0) + 1 FROM tracker.order;"
     result = db_connector.send_query(query)
     return result[0][0] if result else 1
+
+#validate the input types of the order entry
+def validate_order_values(order_values):
+    expected_types = [
+        int,    # id
+        str,    # company
+        int,    # boxes (quantity)
+        str,    # order_date
+        str,    # estimated_arrival
+        str,    # arrival (hardcoded)
+        str,    # shipping_method
+        str,    # shipping_address
+        str,    # billing_address
+        str,    # shipping_status (hardcoded)
+        Decimal,  # subtotal_cost
+        Decimal,  # shipping_cost
+        Decimal,  # total_cost
+        str     # payment_date (hardcoded)
+    ]
+
+    for value, expected_type in zip(order_values, expected_types):
+        if not isinstance(value, expected_type):
+            raise ValueError(
+                f"Invalid type for value '{value}'. "
+                f"Expected {expected_type.__name__}, got {type(value).__name__}."
+            )
     
 # function to place order
 def place_order(db_connector, company, shipping_address, billing_address, line_items, shipping_method, customer_status):
@@ -103,23 +130,24 @@ def place_order(db_connector, company, shipping_address, billing_address, line_i
                 billing_address,          # billing_address
                 'In Transit',                    # shipping_status (not set initially) (hardcode)
                 quantity * item_cost,     # subtotal_cost
-                shipping_cost,            # shipping_cost
-                total_cost,               # total_cost
+                Decimal(shipping_cost),            # shipping_cost
+                Decimal(total_cost),               # total_cost
                 '2055-01-01'                     # payment_date (not known at order time) (hardcode)
             ]
 
             print("Order values: ")
             print(order_values)
 
+            try:
+                validate_order_values(order_values)
+            except ValueError as e:
+                print(f"Type validation error: {e}")
+                return False;
+
             # Use __insert_row__ to insert the row
             db_connector.__insert_row__('order', order_values)
 
             #update inventory by decreasing available and increasing committed
-            # update_inventory_query = f"""
-            #     UPDATE tracker.inventory SET available = available - {quantity}, committed = committed + {quantity}
-            #     WHERE flavor = '{flavor}' AND size = '{size}'
-            # """
-            # db_connector.send_query(update_inventory_query)
             inventory_id = get_inventory_id(db_connector, flavor, size)
 
             if inventory_id:
@@ -159,8 +187,13 @@ def create_invoice(db_connector, order_id):
         print("Order not found.")
 
 
-# make function later
-# def update_payment_status():
-
-# def cancel_order():
+def update_payment_status(db_conenctor, order_id, new_status):
+    try:
+        db_conenctor.update_row('order', 'payment_status', new_status, order_id)
+        print(f"Payment status and date updated successfully for Order ID: {order_id}.")
+        return True
+    except Exception as e:
+        print(f"Error updating payment status for Order ID: {order_id}.")
+        print(e)
+        return False
 
