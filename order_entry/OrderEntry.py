@@ -98,10 +98,10 @@ def place_order(db_connector, company, shipping_address, billing_address, line_i
     # customer status limits
     if customer_status == "ok" and total_cost > 3000:
         print("Order exceeds the $3000 limit for 'OK' customers")
-        return False
+        return "Order exceeds the $3000 limit for 'OK' customers"
     elif customer_status == "shaky" and total_cost > 500:
         print("Order exceeds the $500 limit for 'SHAKY' customers")
-        return False
+        return "Order exceeds the $500 limit for 'SHAKY' customers"
 
     # insert order into order table
     order_date = datetime.now().strftime('%Y-%m-%d')
@@ -142,7 +142,7 @@ def place_order(db_connector, company, shipping_address, billing_address, line_i
                 validate_order_values(order_values)
             except ValueError as e:
                 print(f"Type validation error: {e}")
-                return False;
+                return f"Type validation error: {e}"
 
             # Use __insert_row__ to insert the row
             db_connector.__insert_row__('order', order_values)
@@ -166,14 +166,14 @@ def place_order(db_connector, company, shipping_address, billing_address, line_i
                     db_connector.update_from_primary_key('inventory', inventory_id, 'committed', new_committed)
             else:
                 print(f"Error: Could not find inventory item for {flavor} - {size}")
-                return False
+                return f"Error: Could not find inventory item for {flavor} - {size}"
 
         else:
             print(f"Insufficient stock for {flavor} - {size}.")
-            return False
+            return f"Insufficient stock for {flavor} - {size}."
     
     print("Order placed successfully!")
-    return True
+    return "Order placed successfully!"
 
 def create_invoice(db_connector, order_id):
     query = f"""

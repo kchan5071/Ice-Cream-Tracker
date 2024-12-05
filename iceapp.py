@@ -78,21 +78,43 @@ def order():
 def submittedorder():
     if request.method == 'POST':
         # Extract form data
-        name = request.form.get('name', '').strip()
-        shippingAddress = request.form.get('shippingAddress', '')
-        billingAddress = request.form.get('billingAddress', '')
-        orderDescription = request.form.get('orderDescription', '')
-        customerStatus = request.form.get('customerStatus', '').strip()
+        name = str(request.form.get('customerName', '').strip())
+        shippingAddress = str(request.form.get('shippingAddress', ''))
+        billingAddress = str(request.form.get('billingAddress', ''))
+        flavor = request.form.get('flavor','')
+        size = request.form.get('size','')
+        quantity = int(request.form.get('quantity',''))
+
+        # price calculations
+        sizePrice = 1
+        price = 0
+
+        if size == 'S':
+            sizePrice = 3
+        elif size == 'M':
+            sizePrice = 6
+        elif size == 'L':
+            sizePrice = 12
+
+        price = sizePrice * quantity
+
+        print(name)
+        print(shippingAddress)
+        print(billingAddress)
+        print(flavor)
+        print(size)
+        print(quantity)
+        print(price)
 
         try:
             # Place the order
-            success = place_order(db_conn, name, shippingAddress, billingAddress, orderDescription, "standard", customerStatus)
-
-            # Render success or failure template based on result
-            if success:
-                return render_template('icetrackordersubmitted.html', status="success",  user=user_username)
-            else:
-                return render_template('icetrackordersubmitted.html', status="failure",  user=user_username)
+            success = place_order(db_conn, name, shippingAddress, billingAddress, [(flavor,size,quantity,price)], "Standard", "ok")
+            return render_template('icetrackordersubmitted.html',status=success, user=user_username)
+            # # Render success or failure template based on result
+            # if success:
+            #     return render_template('icetrackordersubmitted.html', status="success",  user=user_username)
+            # else:
+            #     return render_template('icetrackordersubmitted.html', status="failure",  user=user_username)
 
         except Exception as e:
             print(f"Error placing order: {e}")  # Log the error for debugging
@@ -192,12 +214,11 @@ def ticketsubmitted():
     if request.method == 'POST':
 
         # Extract and format form data
-        name = request.form.get('name', '').strip()  # Safeguard against missing keys
-        date_detected = request.form.get('dateDetected', '')
+        name = request.form.get('sourceName', '').strip()  # Safeguard against missing keys
+        date_detected = request.form.get('detectionDate', '')
         problem_type = request.form.get('problemType','')
         description = request.form.get('problemDescription', '')
 
-        date_detected = format_date(date_detected) if date_detected else None
         try:
             success = create_ticket(db_conn, name, date_detected, problem_type, description, status = 'open', resolution=None)    
             return render_template('icetrackticketsubmitted.html', state = success, user=user_username)
@@ -209,9 +230,6 @@ def ticketsubmitted():
     return render_template('icetrackticketsubmitted.html', state = "invalid", user=user_username)
     
 
-
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.run(debug=True)
-
-

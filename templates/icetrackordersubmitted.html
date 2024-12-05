@@ -47,7 +47,7 @@
   {% elif status == "error" %}
       <p>An error occurred: {{ error_message }}</p>
   {% else %}
-      <p>Invalid order submission.</p>
+      <p>{{status}}</p>
   {% endif %}
 </div>
 

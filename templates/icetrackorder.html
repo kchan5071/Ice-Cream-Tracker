@@ -40,13 +40,13 @@
         <!-- string inputs for descriptive values -->
         <div class="input_group2" id = "rcorners5">
             <label for="name" class = "myLabel">Name</label>
-            <input type="text"required id="rcorners4" name = "CustomerName" placeholder = "Tom Brady">  
+            <input type="text"required id="rcorners4" name = "customerName" placeholder = "Company Name">  
          </div>
 
         <!-- Shipping Address -->
         <div class="input_group2" id="rcorners5">
             <label for="shippingAddress" class = "myLabel">Shipping Address</label>
-            <input type="text" required id="rcorners4" name="ShippingAddress">
+            <input type="text" required id="rcorners4" name="shippingAddress">
             <button class="help_button" id="help-shipping">?</button>   
             <div id="myModal-shipping" class="modal">
                 <div class="modal-content">
@@ -59,7 +59,7 @@
         <!-- Billing Address -->
         <div class="input_group2" id="rcorners5">
             <label for="billingAddress" class = "myLabel">Billing Address</label>
-            <input type="text" required id="rcorners4" name="BillingAddress">
+            <input type="text" required id="rcorners4" name="billingAddress">
             <button class="help_button" id="help-billing">?</button>   
             <div id="myModal-billing" class="modal">
                 <div class="modal-content">
@@ -70,78 +70,43 @@
         </div>
 
         <!-- Order Description -->
+        <h2 class = "header2"><u>Flavor</u></h2>
         <div class="input_group2" id="rcorners5">
-            <label for="orderDescription" class = "myLabel">Order Description</label>
-            <textarea id="rcorners4" required rows="2" name="OrderDescription"></textarea>
-            <button class="help_button" id="help-description">?</button>   
-            <div id="myModal-description" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-description">&times;</span>
-                    <p>Describe the order in detail; be sure to include the flavor, size, and quantity.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mismatch with backend but could be implemented -->
-
-<!-- numeric inputs for numeric values -->
-      <!-- <h2 class = "header2"><u>Costs</u></h2>  -->
-        <!-- <div class="input_group" id="rcorners5">
-            <label for="subtotal" class = "myLabel">Subtotal</label>
-            <input type="number" id="amount" name="Subtotal" min="0" step="0.01" required>
-        </div>
-        <div class="input_group2" id="rcorners5">
-            <label for="shippingCost" class = "myLabel">Shipping Cost</label>
-            <input type="number" id="amount" name="ShippingCost" min="0" step="0.01" required>
-        </div>
-        <div class="input_group2" id="rcorners5">
-            <label for="totalCost" class = "myLabel">Total Cost</label>
-            <input type="number" id="amount" name="TotalCost" min="0" step="0.01" required>
-        </div> -->
-        <!-- date-type input values -->
-      <!-- <h2 class = "header2"><u>Time Records</u></h2> 
-        <div class="input_group2" id="rcorners5">
-            <label for="orderDate" class = "myLabel">Order Date</label>
-            <input type="date" required id="rcorners4" name="OrderDate">
-            <button class="help_button" id="help-orderDate">?</button>   
-            <div id="myModal-orderDate" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-orderDate">&times;</span>
-                    <p>Select the date of order placement.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="input_group2" id="rcorners5">
-            <label for="paymentDate" class = "myLabel">Payment Date</label>
-            <input type="date" required id="rcorners4" name="PaymentDate">
-            <button class="help_button" id="help-paymentDate">?</button>   
-            <div id="myModal-paymentDate" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-paymentDate">&times;</span>
-                    <p>Select the date payment was made.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- ^^ Mismatch with backend but could be implemented ^^ -->
-
-        <!-- Customer Status -->
-      <h2 class = "header2"><u>Customer Status</u></h2>
-        <div class="input_group2" id="rcorners5">
-            <label for="customerStatus" class = "myLabel">Customer Status</label>
-            <select id="rcorners4" name="CustomerStatus" multiple required>
-                <option value="preferred">Preferred</option>
-                <option value="ok" selected>Ok</option>
-                <option value="shaky">Shaky</option>
+            <label for="flavor" class = "myLabel">Flavor</label>
+            <select id="rcorners4" name="flavor" multiple required>
+                <option value="vanilla"selected>Vanilla</option>
+                <option value="chocolate">Chocolate</option>
+                <option value="strawberry">Strawberry</option>
             </select>
-            <button class="help_button" id="help-customerStatus">?</button>   
-            <div id="myModal-customerStatus" class="modal">
+            <button class="help_button" id="help-flavor">?</button>   
+            <div id="myModal-flavor" class="modal">
                 <div class="modal-content">
-                    <span class="close" data-modal="myModal-customerStatus">&times;</span>
-                    <p>Select the status best corresponding to the reputation of the customer. If no selection is made, this will default to "OK".</p>
+                    <span class="close" data-modal="myModal-flavor">&times;</span>
+                    <p>What flavor would you like? We currently only have 3 in stock.</p>
                 </div>
             </div>
+        </div>
+
+        <h2 class = "header2"><u>Size</u></h2>
+        <div class="input_group2" id="rcorners5">
+            <label for="size" class = "myLabel">Size</label>
+            <select id="rcorners4" name="size" multiple required>
+                <option value='S'>Small</option>
+                <option value='M'>Medium</option>
+                <option value='L'>Large</option>
+            </select>
+            <button class="help_button" id="help-size">?</button>   
+            <div id="myModal-size" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-size">&times;</span>
+                    <p>Small ~ Serves 1; Medium ~ Serves 5; Large ~ Serves 25.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="input_group" id="rcorners5">
+            <label for="quantity" class = "myLabel">Quantity</label>
+            <input type="number" id="amount" name="quantity" min="0" step="1" required>
         </div>
 
         <input type="submit" class="submit_button" value="Submit">
