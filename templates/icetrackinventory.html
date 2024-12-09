@@ -23,7 +23,7 @@
 </div>
 
 <div class="topnav">
-  <a href="icetrackhome.html"">Home</a> 
+  <a href="icetrackhome.html">Home</a> 
   <a href="icetrackorder.html">Order Entry</a>
   <a href="icetrackinventory.html">Inventory Management</a>
   <a href="icetrackshipment.html">Shipment Tracking</a>
@@ -34,24 +34,39 @@
   
  <!-- The Inventory header showing the orders stored in the database -->
 <div>
-  <h1 class = "header">Current Inventory</h1>
-  <p><h3 class = "myLabel">
-    {% if inventory is none %}
-        <p>The inventory is empty</p>
-    {% else %}
-        <ul>
-            {% for item in inventory %}
-                <li>ID: {{ item['id'] }}, Flavor: {{ item['flavor'] }}, Size: {{ item['size'] }},
-                    Available: {{ item['available'] }}, Committed: {{ item['committed'] }},
-                    Defective: {{ item['defective'] }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-  </h3></p>
+  <h1 class="header">Current Inventory</h1>
+  {% if inventory is none %}
+    <p>The inventory is empty</p>
+  {% else %}
+    <table border="1" style="border-color: rgba(212, 187, 162,0.5); border-radius: 10px; padding: 4px; border-spacing: 4px; border-collapse:separarate; width: 95%; margin:auto; background-color: rgba(255,255,255,0.8);" class = "myLabel">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Flavor</th>
+          <th>Size</th>
+          <th>Available</th>
+          <th>Committed</th>
+          <th>Defective</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in inventory %}
+        <tr>
+          <td>{{ item['id'] }}</td>
+          <td>{{ item['flavor'] }}</td>
+          <td>{{ item['size'] }}</td>
+          <td>{{ item['available'] }}</td>
+          <td>{{ item['committed'] }}</td>
+          <td>{{ item['defective'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
 </div>
 
 
-  <div> 
+
   <!--TODO: give functionality to code below if you can-->
     <!-- The following will filter the current inventory to only show data from certain time frames -->
     <!-- <form action="/summaryInv" method = "post" class = "myLabel">
@@ -78,7 +93,7 @@
       <!-- generate summary button -->
       <!-- <input type = "submit" value = "generate summary" class = "submit_button">
     </form>   -->
-
+    {% if adminPriv is true %}
     <h1 class = "header">Update</h1>
     <p id = "rcorners1" class = "myLabel"> 
       Enter the ID of an object to update the database. 
@@ -88,10 +103,11 @@
     </i></p>
  
 
+    <div class="button-group">
     <!-- # to commit -->
-    <form action="/commitInv" method = "post" class = "myLabel">
+    <form action="/commitInv" method = "post" class = "myLabel" >
       <!-- input value -->
-       <input type="number" class="input_group2" id="rcorners5" name="commitNum">
+       <input type="number" id="rcorners6" name="commitNum" width="25%">
       <!-- commit button -->
        <input type="submit" class="submit_button" value="commit" name="commitNum">
       <!-- help -->
@@ -108,7 +124,7 @@
    <!-- # to delete -->
     <form action="/defectiveInv" method = "post" class = "myLabel">
     <!-- input value -->
-     <input type="number" class="input_group2" id="rcorners5" name="defectiveNum">
+     <input type="number"  id="rcorners6" width="50%"name="defectiveNum">
     <!-- delete button -->
      <input type="submit" class="submit_button" value="defective" > 
     <!-- help -->
@@ -125,7 +141,7 @@
   <!-- # to add -->
   <form action="/addInv" method = "post" class = "myLabel">
     <!-- input value -->
-     <input type="number" class="input_group2" id="rcorners5" name="addNum">
+     <input type="number" class="input_group2" id="rcorners6" name="addNum">
     <!-- add button -->
      <input type="submit" class="submit_button" value="add" > 
     <!-- help -->
@@ -142,11 +158,11 @@
     <!-- # to delete -->
   <form action="/deleteInv" method = "post" class = "myLabel">
     <!-- input value -->
-     <input type="number" class="input_group2" id="rcorners5" name="deleteNum">
-    <!-- add button -->
-     <input type="submit" class="submit_button" value="delete" > 
+     <input type="number" class="input_group2" id="rcorners6" name="deleteNum">
+    <!-- delete button -->
+     <input type="submit" class="submit_button" value="delete"> 
     <!-- help -->
-     <button type="button" class="help_button" id="help-delete">?</button>
+     <button type="button" class="help_button" id="help-delete" >?</button>
      <div id="myModal-delete" class="modal">
       <div class="modal-content">
           <span class="close" data-modal="myModal-delete">&times;</span>
@@ -154,8 +170,9 @@
       </div>
      </div>
    </form>
-   <br>
-  </div>
+
+   </div>
+   {% endif %}
 
 <script src="{{ url_for('static',filename='script/helpButtonInventory.js') }}"></script>
 </body>

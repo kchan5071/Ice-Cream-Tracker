@@ -1,3 +1,5 @@
+import sys
+import os
 # Create the trouble ticket 
 def create_ticket(db_connector, source, date_detected, problem_type, description, status, resolution=None):
     init_query = """
@@ -25,8 +27,27 @@ def view_open_tickets(db_connector):
     query = "SELECT * FROM tracker.ticket WHERE status = 'open';"
     db_connector.cursor.execute(query)
     rows = db_connector.cursor.fetchall()
-    for row in rows:
-        print(row)
+    
+    if rows:
+        data = []
+        for row in rows:
+            id, source, type, description, status, report_date, date_detected, date_resolved, resolution  = row
+            data.append({
+                'id': id,
+                'source': source,
+                'type': type,
+                'description': description,
+                'status': status,
+                'report_date': format_date(report_date),
+                'date_detected': date_detected,
+                'date_resolved': date_resolved,
+                'resolution': resolution
+            })
+        print(data)
+        return data
+    else:
+        print("There are currently no open trouble tickets")
+        return None
 
 # Delete a ticket 
 def delete_ticket(db_connector, ticket_id):
@@ -100,3 +121,6 @@ def generate_statistical_report(db_connector):
     for row in rows:
         print(f"Type: {row[0]}, Total: {row[1]}, Avg Time to Close: {row[2]} days, Avg Open Days: {row[3]} days")
 
+#formatting date
+def format_date(date_obj):
+    return date_obj.strftime('%Y-%m-%d') if date_obj else None

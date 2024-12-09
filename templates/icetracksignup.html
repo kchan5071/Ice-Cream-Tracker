@@ -14,27 +14,31 @@
 </head>
 <body>
     <div class="identifier">
-        <!--Signing in creates a new employee, usernames cannot be duplicated -->
-            <a href="icetrackhome.html">Home</a> 
+        <a>Not logged in</a>
     </div>
     <div class="header">
         <h1>Sign Up</h1>
     </div>
 
-    <!-- A warning for the user to delete after implementation -->
-    <p  id = "rcorners1" class = "myLabel"> Sign Up feature currently inactive.</p>
+    <!-- A welcome message -->
+    <p  id = "rcorners1" class = "myLabel"> Sign Up to use Ice Track.</p>
 
-    <!-- TODO: Turn this into a form readable by flask -->
-    <div class="loginbox">
-        <h3>Choose a username and password:</h3>
-        <div class="input_group" id = "rcorners2">
-            <input type="text"required id="rcorners1">
-            <label for="">Username</label>
-            <input type="password"required id="rcorners1">
-            <label for="">Password</label>
+    <form action="/signup" method="POST">
+        <div class="loginbox">
+            <h3 class="myLabel">Choose a username and password:</h3>
+            <div class="input_group" id = "rcorners2">
+                <input type="text" id="rcorners1" placeholder="username" name="username">
+                <label for="">Username</label>
+                <input type="password" id="rcorners1" placeholder="password" name="password">
+                <label for="">Password</label>
+            </div>
+            <a href="icetracklogin.html"><button class="button" id = "rcorners3"> Back to Login</button></a>
+            <!-- <button class="button" id = "rcorners3"> <b>Sign Up</b></button> -->
+            <input type="submit" value="Sign Up" class="button" id="rcorners3">
         </div>
-        <a href="icetracklogin.html"><button class="button" id = "rcorners3"> <b>Login</b></button></a>
-        <button class="button" id = "rcorners3"> <b>Sign Up</b></button>
-    </div>
+    </form>
+    {% if message %}
+        <p class = "myLabel">{{message}}</p>
+    {% endif %}
 </body>
 </html>

@@ -33,10 +33,12 @@
     </div>
 
     <p id="rcorners1" class = "myLabel"> Enter one order at a time and remember to review information before submitting.</p>
-
-    <!-- Form sends info the user puts in, to our database -->
     <form action="/icetrackordersubmitted" id = "orderForm" method="POST" name="data">
-        <h2 class = "header2"><u>Order Details</u></h2>
+      <h2 class = "header2"><u>Order Details</u></h2>
+    <div class = "row">
+    <div class = "column">
+    <!-- Form sends info the user puts in, to our database -->
+    
         <!-- string inputs for descriptive values -->
         <div class="input_group2" id = "rcorners5">
             <label for="name" class = "myLabel">Name</label>
@@ -68,50 +70,63 @@
                 </div>
             </div>
         </div>
-
+      </div>
+      <div class = "column">
         <!-- Order Description -->
-        <h2 class = "header2"><u>Flavor</u></h2>
-        <div class="input_group2" id="rcorners5">
-            <label for="flavor" class = "myLabel">Flavor</label>
-            <select id="rcorners4" name="flavor" multiple required>
-                <option value="vanilla"selected>Vanilla</option>
-                <option value="chocolate">Chocolate</option>
-                <option value="strawberry">Strawberry</option>
+          <div class="input_group2" id="rcorners5">
+            <label for="flavor" class="myLabel">Flavor</label>
+            <select id="flavor-dropdown" name="flavor" class="dropdown-button" required>
+              <!-- <option value="">-- Flavor --</option> -->
+              <option value="vanilla">Vanilla</option>
+              <option value="chocolate">Chocolate</option>
+              <option value="strawberry">Strawberry</option>
             </select>
-            <button class="help_button" id="help-flavor">?</button>   
-            <div id="myModal-flavor" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-flavor">&times;</span>
-                    <p>What flavor would you like? We currently only have 3 in stock.</p>
-                </div>
+            <button class="help_button" id="help-flavor">?</button>
+          <div id="myModal-flavor" class="modal">
+            <div class="modal-content">
+              <span class="close" data-modal="myModal-flavor">&times;</span>
+              <p>What flavor would you like? We currently only have 3 in stock.</p>
             </div>
+          </div>
         </div>
-
-        <h2 class = "header2"><u>Size</u></h2>
+        
         <div class="input_group2" id="rcorners5">
-            <label for="size" class = "myLabel">Size</label>
-            <select id="rcorners4" name="size" multiple required>
-                <option value='S'>Small</option>
-                <option value='M'>Medium</option>
-                <option value='L'>Large</option>
-            </select>
-            <button class="help_button" id="help-size">?</button>   
-            <div id="myModal-size" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-size">&times;</span>
-                    <p>Small ~ Serves 1; Medium ~ Serves 5; Large ~ Serves 25.</p>
-                </div>
+          <label for="size" class="myLabel">Size</label>
+          <select id="size-dropdown" name="size" class="dropdown-button" required>
+            <!-- <option value="">-- Size --</option> -->
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+          </select>
+          <button class="help_button" id="help-size">?</button>
+          <div id="myModal-size" class="modal">
+            <div class="modal-content">
+              <span class="close" data-modal="myModal-size">&times;</span>
+              <p>Small ~ Serves 1; Medium ~ Serves 5; Large ~ Serves 25.</p>
             </div>
+          </div>
         </div>
 
         <div class="input_group" id="rcorners5">
             <label for="quantity" class = "myLabel">Quantity</label>
-            <input type="number" id="amount" name="quantity" min="0" step="1" required>
+            <input id="rcorners4" type="number" name="quantity" min="0" step="1" required>
+        <button class="help_button" id="help-quantity">?</button>   
+            <div id="myModal-quantity" class="modal">
+                <div class="modal-content">
+                    <span class="close" data-modal="myModal-quantity">&times;</span>
+                    <p>How many of this type of ice cream you would like?</p>
+                </div>
+            </div>
+        </div>
+        </div>
         </div>
 
         <input type="submit" class="submit_button" value="Submit">
         
     </form>
+
+      
+
     <!-- Created for simplicity of html, but unnecessary: <script src="postOrderEntry.js"></script> -->
     <br>
     <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit.</p>

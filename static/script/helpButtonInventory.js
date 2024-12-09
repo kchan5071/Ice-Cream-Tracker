@@ -26,9 +26,6 @@ document.getElementById("help-add").onclick = function() {
 document.getElementById("help-defective").onclick = function() {
     showModal("myModal-defective");
 };
-// document.getElementById("help-timeFrame").onclick = function() {
-//     showModal("myModal-timeFrame");
-// };
 
 
 // Event listeners for closing modals

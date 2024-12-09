@@ -20,21 +20,21 @@
         <h1>Login</h1>
     </div>
 
-    <!-- A warning for the user to delete after implementation -->
+    <!-- Weclome Message -->
     <p  id = "rcorners1" class = "myLabel"> Login to access Ice Track.</p>
 
-    <!-- TODO: Turn this into a form readable by flask -->
      <form action="/login" method="POST">
         <div class="loginbox">
             <h3>Enter your username and password:</h3>
             <div class="input_group" id = "rcorners2">
-                <input type="text"required id="rcorners1" placeholder="username" name="username">
+                <input type="text" id="rcorners1" placeholder="username" name="username">
                 <label for="">Username</label>
-                <input type="password"required id="rcorners1" placeholder="password" name="password">
+                <input type="password" id="rcorners1" placeholder="password" name="password">
                 <label for="">Password</label>
             
             </div>
-            <input type="submit" value="Log in" class="button" id="rcorners3">
+            <div class="myLabel"><input type="submit" value="Log in" class="button" id="rcorners3">
+            <a href="icetracksignup.html" class="button" id = "rcorners3" >Sign Up</a></div>
         </div>
     </form>
 </body>

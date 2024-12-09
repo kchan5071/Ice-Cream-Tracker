@@ -27,6 +27,18 @@
     background-color: rgb(241, 230, 205);
     align-content: center;
   }
+
+  .column {
+    float: left;
+    width: 50%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
   
   .identifier {
     overflow: hidden;
@@ -108,9 +120,9 @@
   
   #rcorners1 {
     /*responsible for text boxes encasing login (user and pass) */
-    border-radius: 25px;
+    border-radius: 20px;
     background: rgba(255,255,255,0.8);
-    padding: 10px;
+    padding: 10px 20px;
     margin: 10px;
     text-align: left;
   }
@@ -134,12 +146,17 @@
   }
   #rcorners4 {
     /* Responsible for the from input sections */
-    border-radius: 5px;
-    border-width: 2px;
     background: white;
-    /* padding: 20px; */
+    padding: 4px;
     margin: 5;
     text-align: left;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    max-width: 200px;
   }
 
   #amount {
@@ -157,6 +174,7 @@
     width: 300px;
     margin: 5;
     text-align: left;
+
   }
   #rcorners5 {
     /* Responsible for the alignment of each subdivision on forms*/
@@ -166,7 +184,40 @@
     margin: 50 50;
     align-content: left;
     text-align: left;
+    /* width: 70px; */
+    width: calc(100% - 100px);
   }
+  #rcorners6 {
+    /* Responsible for small numeric buttons*/
+    border-width: 2px;
+    border-color:white;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 50 50;
+    align-content: left;
+    text-align: left;
+    width: 80px;
+    /* width: calc(100% - 100px); */
+  }
+
+ /* Splits the buttons into two columns */
+  .button-group {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px;
+    justify-content: space-between;
+  }
+/* 
+  .button-group button {
+    flex: 1 1 calc(50% - 10px);  Two columns with spacing 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  } 
+  */
 
   .horizonLine{
     color: #61350a;
@@ -208,7 +259,7 @@
 
   .submit_button {
     display: inline-block;
-    padding: 15px 25px;
+    padding: 10px 15px;
     font-size: 24px;
     cursor: pointer;
     text-align: center;
@@ -235,6 +286,7 @@
   }
   .input_group2 {
     align-content: left;
+    
   }
   
 .modal {
@@ -281,4 +333,50 @@
   color: black;    
   text-decoration: none;
   cursor: pointer;
+}
+
+
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.dropdown-button {
+  width: 100%;
+  max-width: 200px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.hidden {
+  display: none;
 }

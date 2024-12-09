@@ -40,6 +40,7 @@
 <!-- Confirms or denies submissions status -->
 <div>
   <h2 class = "header2">Submission Status</h2>
+  <a class="myLabel"></a>
   {% if state == "invalid" %}
       <p>Your submission this time was invalid. Check your inputs and try again. </p>
   {% elif state == "error" %}
@@ -47,6 +48,7 @@
   {% else %}
       <p>Your ticket with id: {{state}} has been successfully created.</p>
   {% endif %}
+  
 </div>
 
  <p id = "rcorners1" class = "myLabel">Thank you for updating our records!</p>

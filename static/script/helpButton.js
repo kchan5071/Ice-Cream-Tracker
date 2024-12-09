@@ -19,17 +19,17 @@ document.getElementById("help-shipping").onclick = function() {
 document.getElementById("help-billing").onclick = function() {
     showModal("myModal-billing");
 };
-document.getElementById("help-description").onclick = function() {
-    showModal("myModal-description");
+document.getElementById("help-flavor").onclick = function() {
+    showModal("myModal-flavor");
 };
-document.getElementById("help-orderDate").onclick = function() {
-    showModal("myModal-orderDate");
+document.getElementById("help-size").onclick = function() {
+    showModal("myModal-size");
 };
-document.getElementById("help-paymentDate").onclick = function() {
-    showModal("myModal-paymentDate");
+document.getElementById("help-size").onclick = function() {
+    showModal("myModal-size");
 };
-document.getElementById("help-customerStatus").onclick = function() {
-    showModal("myModal-customerStatus");
+document.getElementById("help-quantity").onclick = function() {
+    showModal("myModal-quantity");
 };
 
 

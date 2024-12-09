@@ -30,8 +30,60 @@
   <a href="icetrackticketmgmt.html">Trouble Tickets</a>
   <a href="icetrackFAQ.html">FAQ</a>
 </nav>
+
+
+{% if adminPriv is true %}
+<div>
+  <h1 class="header">Currently Open Tickets</h1>
+    {% if open_tickets is none %}
+      <p>The open_tickets is empty</p>
+    {% else %}
+    <table border="1" style="border-color: rgba(212, 187, 162,0.5); border-radius: 10px; padding: 4px; border-spacing: 4px; border-collapse:separarate; width: 95%; margin:auto; background-color: rgba(255,255,255,0.8);" class = "myLabel">
+      <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Report Date</th>
+            <th>Date Detected</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ticket in open_tickets %}
+          <tr>
+            <td>{{ ticket['id'] }}</td>
+            <td>{{ ticket['type'] }}</td>
+            <td>{{ ticket['description'] }}</td>
+            <td>{{ ticket['report_date'] }}</td>
+            <td>{{ ticket['date_detected'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+</div>
+
 <p id = "rcorners1" class = "myLabel"> 
-  This page allows you to send any issues to the company in appropriate detail! 
+  Help Ice Track by resolving issues that we can't figure out.
+  <br><br>
+  If a ticket has been resolved, note it here:
+</p>
+
+<form action="/resolveTicket" id="ticketResolution" method="POST" name="ticketResolution">
+
+  <div class="input_group2" id="rcorners5">
+    <label for="" class = "myLabel">Ticket ID</label>
+    <input type="number" required id="rcorners6" name="ticketID">
+    <label for="" class = "myLabel">Resolution</label>
+    <textarea type="textarea" required id="rcorners4" style="position:absolute" name="resolution" placeholder="How was this matter resolved?"></textarea>
+  </div>
+  <input type="submit" class="submit_button" style = "align-content: center;" value="Close Ticket">
+</form>
+
+
+{% else %}
+<p id = "rcorners1" class = "myLabel"> 
+  Having Problems? Send in a trouble ticket so the proper authorities may handle your issue.
   <br>
   <br>
   Enter one order at a time and remember to review information before submitting.
@@ -56,7 +108,7 @@
     <!-- Source: Name of Reporter -->
       <div class="input_group2" id = "rcorners5">
         <label for="" class = "myLabel">Name</label>
-        <input type="text"required id="rcorners4" name = "sourceName" placeholder = "Tom Brady">  
+        <input type="text"required id="rcorners4" name = "sourceName" placeholder = "Company Name">  
         <button class="help_button" id="help-sourceName">?</button>   
         <div id="myModal-sourceName" class="modal">
           <div class="modal-content">
@@ -80,24 +132,23 @@
       </div>
 
     <!-- Type of Problem -->
-      <div class="input_group2" id="rcorners5">
-        <label for="" class = "myLabel">Type of Problem</label>
-        <select id="rcorners4" name="problemType" multiple required>
-            <option value="inventory">Inventory Management</option>
-            <option value="order">Order Entry</option>
-            <option value="shipment">Shipment Tracking</option>
-            <option value="site">Website Navigation</option>
-            <option value="other" selected>Other</option>
-            <!-- Change these values to actual applicable problems -->
-        </select>
-        <button class="help_button" id="help-problemType">?</button>   
-        <div id="myModal-problemType" class="modal">
-            <div class="modal-content">
-                <span class="close" data-modal="myModal-problemType">&times;</span>
-                <p>Select the most applicable/ closest problem to your concerns.</p>
-            </div>
-        </div>
-      </div>  
+    <div class="input_group2" id="rcorners5">
+      <label for="problemType" class="myLabel">Problem Type</label>
+      <select id="problem-dropdown" name="problemType" class="dropdown-button" required>
+        <option value="inventory">Inventory Management</option>
+        <option  value="order">Order Entry</option>
+        <option value="shipment">Shipment Tracking</option>
+        <option  value="site">Website Navigation</option>
+        <option value="other" selected>Other</option>
+      </select>
+      <button class="help_button" id="help-problemType">?</button>   
+          <div id="myModal-problemType" class="modal">
+              <div class="modal-content">
+                  <span class="close" data-modal="myModal-problemType">&times;</span>
+                  <p>Select the most applicable/ closest problem to your concerns.</p>
+              </div>
+          </div>
+    </div>
 
         <!-- Description of Problem -->
         <div class="input_group2" id="rcorners5">
@@ -117,6 +168,7 @@
       </form>
       <br>
     
+{% endif %}
 
     <p id="rcorners1" class = "myLabel"> Don't forget to review <b>before</b> you submit.</p>
     <script src="{{ url_for('static',filename='script/helpButtonTicket.js') }}"></script>

@@ -86,7 +86,6 @@
         <br>
     </form>
     <script src="{{ url_for('static',filename='script/helpButtonShip.js') }}"></script>
-    <hr>
 
 <!-- Returned Information from Search -->
 <div id="shipmentSummary"></div>
@@ -94,28 +93,47 @@
     
    <hr>
 
-   <!-- Shows shipment on click -->
-   <div>
+  <div>
     {% if error %}
-        <div class="error-message">
-            <p>{{ error }}</p>
-        </div>
+      <div class="error-message">
+        <p class="myLabel">{{ error }}</p>
+      </div>
     {% elif foundStatus %}
-        <h1 class="header">Found Match:</h1>
-        <ul class="myLabel">
-        <li><b>ID:</b> {{ foundStatus['Order ID'] }}</li>
-        <li><b>Shipment Date:</b> {{ foundStatus['Date Shipped'] }}</li>
-        <li><b>Shipment Boxes:</b> {{ foundStatus['Shipment Boxes'] }}</li>
-        <li><b>Full/Partial Shipment:</b> {{ foundStatus['Full/Partial Shipment'] }}</li>
-        <li><b>Estimated Arrival:</b> {{ foundStatus['Estimated Arrival'] }}</li>
-        <li><b>Arrival Date:</b> {{ foundStatus['Arrrival Date'] }}</li>
-        <li><b>Status:</b> {{ foundStatus['Status'] }}</li>
-        </ul>
+    <h2 class = "header2"><u>Shipment Found</u></h2>
+    
+    <table border="1" style="border-color: rgba(212, 187, 162,0.5); border-radius: 10px; padding: 4px; border-spacing: 4px; border-collapse:separarate; width: 95%; margin:auto; background-color: rgba(255,255,255,0.8);" class = "myLabel">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Shipment Date: </th>
+            <th>Shipment Boxes: </th>
+            <th>Full/Partial Shipment:</th>
+            <th>Estimated Arrival:</th>
+            <th>Arrival Date:</th>
+            <th>Status:</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for status in foundStatus %}
+          <tr>
+            <td>{{ status['Order ID'] }}</td>
+            <td>{{ status['Date Shipped'] }}</td>
+            <td>{{  status['Shipment Boxes'] }}</td>
+            <td>{{ status['Full/Partial Shipment'] }}</td>
+            <td>{{ status['Estimated Arrival'] }}</td>
+            <td>{{ status['Arrrival Date'] }}</td>
+            <td>{{ status['Status'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     {% else %}
-        <p>No shipment status available.</p>
+      <p class="myLabel">No shipment status available.</p>
     {% endif %}
     <br>
   </div>
+  
+  
 
 
 </body>

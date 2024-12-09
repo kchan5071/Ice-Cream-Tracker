@@ -40,6 +40,7 @@
 <!-- shows submission status (success or failure) -->
 <div>
   <h2 class = "header2">Submission Status </h2>
+  <a class="myLabel">
   {% if status == "success" %}
       <p>Your order has been successfully placed!</p>
   {% elif status == "failure" %}
@@ -49,6 +50,7 @@
   {% else %}
       <p>{{status}}</p>
   {% endif %}
+</a>
 </div>
 
 
