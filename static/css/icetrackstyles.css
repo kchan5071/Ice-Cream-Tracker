@@ -237,6 +237,10 @@
     background-color: white;
     color: black;
     border: 2px solid #555555;
+    font-family: "Montserrat";
+    font-optical-sizing: auto;
+    font-size: 15px;
+    font-weight: 500;
   }
   
   .button:hover {
