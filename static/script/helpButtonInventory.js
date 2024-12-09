@@ -26,6 +26,18 @@ document.getElementById("help-add").onclick = function() {
 document.getElementById("help-defective").onclick = function() {
     showModal("myModal-defective");
 };
+document.getElementById("help-idEntry").onclick = function() {
+    showModal("myModal-idEntry");
+};
+document.getElementById("help-flavor").onclick = function() {
+    showModal("myModal-flavor");
+};
+document.getElementById("help-size").onclick = function() {
+    showModal("myModal-size");
+};
+document.getElementById("help-quanitity").onclick = function() {
+    showModal("myModal-quantity");
+};
 
 
 // Event listeners for closing modals

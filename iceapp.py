@@ -117,11 +117,11 @@ def submittedorder():
         price = 0
 
         if size == 'S':
-            sizePrice = 3
+            sizePrice = 2.99
         elif size == 'M':
-            sizePrice = 6
+            sizePrice = 3.99
         elif size == 'L':
-            sizePrice = 12
+            sizePrice = 4.992
 
         price = sizePrice * quantity 
 
@@ -149,7 +149,6 @@ def commitInv():
     inventoryMGMT.update_commited(givenID)
     return inventory()
 
-
 # when the add button is pressed (only accessible by admin)
 @app.route('/addInv',methods=['POST','GET'])
 def addInv():
@@ -171,6 +170,28 @@ def defectiveInv():
 def deleteInv():
     givenID = int(request.form.get('deleteNum',0))
     inventoryMGMT.decrement_available(givenID)
+    return inventory()
+
+
+# when the add new ice cream button is pressed (only accessible by admin)
+@app.route('/icetracknewinventory',methods=['POST','GET'])
+def newInv():
+    givenID = int(request.form.get('id',0))
+    flavor = request.form.get('flavor','')
+    size = request.form.get('size','')
+    # cost calculations (matching the order submission)
+    if size == 'S':
+        sizePrice = 2.99
+    elif size == 'M':
+        sizePrice = 3.99
+    elif size == 'L':
+        sizePrice = 4.99
+    cost = sizePrice
+    available = int(request.form.get('quantity',0))
+    committed = 0
+    defective = 0
+    # adding product based on gathered info
+    inventoryMGMT.add_product(givenID, flavor, size, cost, available, committed, defective)
     return inventory()
 
 # ice track shipment page
