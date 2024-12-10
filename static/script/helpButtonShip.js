@@ -13,20 +13,15 @@ function closeModal(modalId) {
 }
 
 // Event listeners for each help button and close button (in order of appearance)
-document.getElementById("help-orderName").onclick = function() {
-    showModal("myModal-orderName");
+document.getElementById("help-companyName").onclick = function() {
+    showModal("myModal-companyName");
 };
-document.getElementById("help-shipmentDate").onclick = function() {
-    showModal("myModal-shipmentDate");
+document.getElementById("help-orderDate").onclick = function() {
+    showModal("myModal-orderDate");
 };
-document.getElementById("help-shippingAddress").onclick = function() {
-    showModal("myModal-shippingAddress");
+document.getElementById("help-estimatedArrival").onclick = function() {
+    showModal("myModal-estimatedArrival");
 };
-document.getElementById("help-deliveryDate").onclick = function() {
-    showModal("myModal-deliveryDate");
-};
-
-
 
 // Event listeners for closing modals
 document.querySelectorAll('.close').forEach(function(element) {

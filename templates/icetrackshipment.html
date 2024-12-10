@@ -13,7 +13,6 @@
    
 </head>
 <body>
-    <script src="{{ url_for('static',filename='script/icetrackJS.js') }}"></script>
 
     <div class="identifier">
         <a>{{user}}</a> <!-- show user currently logged in -->
@@ -45,41 +44,43 @@
       <h2 class = "header2"><u>Find Your Shipment</u></h2>
         <!-- The Customer's Name -->
         <div class="input_group2" id = "rcorners5">
-            <label for="" class = "myLabel">Company Name</label>
-            <input type="text" id="rcorners4" name = "companyName" placeholder = "Tom Brady">  
-            <button class="help_button" id="help-orderName">?</button>   
-            <div id="myModal-orderName" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-orderName">&times;</span>
-                    <p>This name should match the one associated with the order, typically the company's name as entered.</p>
-                </div>
-            </div>
+            <label class = "myLabel">Company Name</label>
+            <input type="text" id="rcorners4" name = "companyName" placeholder = "Company Name">  
+            <button class="help_button" id="help-companyName">?</button>   
+            <div id="myModal-companyName" class="modal">
+              <div class="modal-content">
+                  <span class="close" data-modal="myModal-companyName">&times;</span>
+                  <p>This name should match the one associated with the order, typically the company's name as entered.</p>
+              </div>
           </div>
+          
+        </div>
 
         <!-- Shipment Date -->
        <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Order Date</label>
+            <label class = "myLabel">Order Date</label>
             <input type="date" id="rcorners4" name="orderDate">
-            <button class="help_button" id="help-shipmentDate">?</button>   
-            <div id="myModal-shipmentDate" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-shipmentDate">&times;</span>
-                    <p>Select the date of order placement according to your receipts</p>
-                </div>
-            </div>
+            <button class="help_button" id="help-orderDate">?</button>   
+            <div id="myModal-orderDate" class="modal">
+              <div class="modal-content">
+                  <span class="close" data-modal="myModal-orderDate">&times;</span>
+                  <p>Select the date of order placement according to your receipts.</p>
+              </div>
+          </div>
+          
         </div>
 
         <!-- Expected Delivery Date -->
         <div class="input_group2" id="rcorners5">
-            <label for="" class = "myLabel">Expected Delivery Date</label>
+            <label class = "myLabel">Expected Delivery Date</label>
             <input type="date" id="rcorners4" name="estimatedArrival">
-            <button class="help_button" id="help-deliveryDate">?</button>   
-            <div id="myModal-deliveryDate" class="modal">
-                <div class="modal-content">
-                    <span class="close" data-modal="myModal-deliveryDate">&times;</span>
-                    <p>Select the date the package was (or is) expected to be delivery regardless of accuracy.</p>
-                </div>
-            </div>
+            <button class="help_button" id="help-estimatedArrival">?</button>   
+            <div id="myModal-estimatedArrival" class="modal">
+              <div class="modal-content">
+                  <span class="close" data-modal="myModal-estimatedArrival">&times;</span>
+                  <p>Select the date the package was (or is) expected to be delivery regardless of accuracy.</p>
+              </div>
+          </div>
         </div>
         <!-- The button for searching when the user is done filling out identifiable information -->
         <input type="submit" class="submit_button" value = "Track">

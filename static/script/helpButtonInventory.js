@@ -35,7 +35,7 @@ document.getElementById("help-flavor").onclick = function() {
 document.getElementById("help-size").onclick = function() {
     showModal("myModal-size");
 };
-document.getElementById("help-quanitity").onclick = function() {
+document.getElementById("help-quantity").onclick = function() {
     showModal("myModal-quantity");
 };
 
